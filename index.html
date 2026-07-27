@@ -1,0 +1,97 @@
+  <!DOCTYPE html>
+  <html lang="zh-CN">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Yan · 个人简历</title>
+      <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
+          body {
+              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+              max-width: 720px;
+              margin: 0 auto;
+              padding: 48px 24px;
+              line-height: 1.6;
+              color: #1a1a1a;
+          }
+          h1 { font-size: 2rem; margin-bottom: 4px; }
+          .subtitle { color: #666; margin-bottom: 24px; }
+          section { margin: 32px 0; }
+          h2 { font-size: 1.25rem; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 16px; }
+          .item { margin-bottom: 16px; }
+          .item h3 { font-size: 1.05rem; }
+          .item .meta { color: #666; font-size: 0.9rem; }
+          .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+          .tags span {
+              background: #f0f0f0; padding: 2px 10px; border-radius: 12px;
+              font-size: 0.8rem; color: #555;
+          }
+          a { color: #2563eb; text-decoration: none; }
+          a:hover { text-decoration: underline; }
+      </style>
+  </head>
+  <body>
+      <h1>Yan</h1>
+      <p class="subtitle">
+          CS Student · Backend Engineer (C++)
+          · <a href="https://github.com/ziyan-cs">GitHub</a>
+          · <a href="mailto:me@你的域名.com">me@你的域名.com</a>
+      </p>
+
+      <section>
+          <h2>关于我</h2>
+          <p>
+              C++ 后端开发者，专注网络编程与服务端架构。
+              从 Epoll 多路复用到 HTTP 协议解析，正在亲手构建一个完整的 Web 服务器。
+          </p>
+      </section>
+
+      <section>
+          <h2>项目</h2>
+
+          <div class="item">
+              <h3>WebServer · C++17 HTTP/1.1 服务器</h3>
+              <p class="meta">2025 - 至今</p>
+              <p>基于 Epoll + 非阻塞 I/O 的单线程事件驱动服务器，支持 GET/HEAD、长连接、CGI。</p>
+              <div class="tags">
+                  <span>C++17</span>
+                  <span>Epoll</span>
+                  <span>POSIX Sockets</span>
+                  <span>CMake</span>
+              </div>
+          </div>
+
+          <div class="item">
+              <h3>更多项目</h3>
+              <p class="meta"><a href="https://github.com/ziyan-cs">→ GitHub Profile</a></p>
+          </div>
+      </section>
+
+      <section>
+          <h2>技能</h2>
+          <div class="tags">
+              <span>C++17/20</span>
+              <span>CMake</span>
+              <span>Python</span>
+              <span>Node.js</span>
+              <span>Docker</span>
+              <span>MySQL</span>
+              <span>Redis</span>
+              <span>Git</span>
+              <span>Linux</span>
+          </div>
+      </section>
+
+      <section>
+          <h2>教育</h2>
+          <div class="item">
+              <h3>计算机科学与技术 · 本科</h3>
+              <p class="meta">2023 - 2027</p>
+          </div>
+      </section>
+
+      <footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid #eee; color: #999; font-size: 0.85rem;">
+          &copy; 2026 Yan · Powered by Cloudflare Pages
+      </footer>
+  </body>
+  </html>
