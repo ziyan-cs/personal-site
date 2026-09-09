@@ -1,97 +1,204 @@
-  <!DOCTYPE html>
-  <html lang="zh-CN">
-  <head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+   <head>
       <meta charset="UTF-8">
+      <meta name="description" content="ziyan-cs — C++ backend, Linux network programming and systems engineering.">
+      <meta name="robots" content="index, follow">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Yan · 个人简历</title>
-      <style>
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-          body {
-              font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-              max-width: 720px;
-              margin: 0 auto;
-              padding: 48px 24px;
-              line-height: 1.6;
-              color: #1a1a1a;
-          }
-          h1 { font-size: 2rem; margin-bottom: 4px; }
-          .subtitle { color: #666; margin-bottom: 24px; }
-          section { margin: 32px 0; }
-          h2 { font-size: 1.25rem; border-bottom: 2px solid #eee; padding-bottom: 8px; margin-bottom: 16px; }
-          .item { margin-bottom: 16px; }
-          .item h3 { font-size: 1.05rem; }
-          .item .meta { color: #666; font-size: 0.9rem; }
-          .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-          .tags span {
-              background: #f0f0f0; padding: 2px 10px; border-radius: 12px;
-              font-size: 0.8rem; color: #555;
-          }
-          a { color: #2563eb; text-decoration: none; }
-          a:hover { text-decoration: underline; }
-      </style>
-  </head>
-  <body>
-      <h1>Yan</h1>
-      <p class="subtitle">
-          CS Student · Backend Engineer (C++)
-          · <a href="https://github.com/ziyan-cs">GitHub</a>
-          · <a href="mailto:me@你的域名.com">me@你的域名.com</a>
-      </p>
+      <meta name="referrer" content="strict-origin-when-cross-origin">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.simpleicons.org; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+      <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 
-      <section>
-          <h2>关于我</h2>
-          <p>
-              C++ 后端开发者，专注网络编程与服务端架构。
-              从 Epoll 多路复用到 HTTP 协议解析，正在亲手构建一个完整的 Web 服务器。
-          </p>
-      </section>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
 
-      <section>
-          <h2>项目</h2>
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600&amp;family=Syne:wght@400..800&amp;display=swap">
 
-          <div class="item">
-              <h3>WebServer · C++17 HTTP/1.1 服务器</h3>
-              <p class="meta">2025 - 至今</p>
-              <p>基于 Epoll + 非阻塞 I/O 的单线程事件驱动服务器，支持 GET/HEAD、长连接、CGI。</p>
-              <div class="tags">
-                  <span>C++17</span>
-                  <span>Epoll</span>
-                  <span>POSIX Sockets</span>
-                  <span>CMake</span>
-              </div>
-          </div>
+      <link rel="stylesheet" href="assets/css/styles.css">
 
-          <div class="item">
-              <h3>更多项目</h3>
-              <p class="meta"><a href="https://github.com/ziyan-cs">→ GitHub Profile</a></p>
-          </div>
-      </section>
+      <title>ziyan-cs · C++ Backend Engineer</title>
+   </head>
+   <body>
+      <header class="header" id="header">
+         <nav class="nav container">
+            <a href="/" class="nav__logo">ziyan-cs</a>
 
-      <section>
-          <h2>技能</h2>
-          <div class="tags">
-              <span>C++17/20</span>
-              <span>CMake</span>
-              <span>Python</span>
-              <span>Node.js</span>
-              <span>Docker</span>
-              <span>MySQL</span>
-              <span>Redis</span>
-              <span>Git</span>
-              <span>Linux</span>
-          </div>
-      </section>
+            <div class="nav__menu" id="nav-menu">
+               <ul class="nav__list">
+                  <li>
+                     <a href="#home" class="nav__link active-link">Home</a>
+                  </li>
 
-      <section>
-          <h2>教育</h2>
-          <div class="item">
-              <h3>计算机科学与技术 · 本科</h3>
-              <p class="meta">2023 - 2027</p>
-          </div>
-      </section>
+                  <li>
+                     <a href="#work" class="nav__link">Works</a>
+                  </li>
 
-      <footer style="margin-top: 64px; padding-top: 16px; border-top: 1px solid #eee; color: #999; font-size: 0.85rem;">
-          &copy; 2026 Yan · Powered by Cloudflare Pages
+                  <li>
+                     <a href="#service" class="nav__link">My Services</a>
+                  </li>
+
+                  <li>
+                     <a href="#skills" class="nav__link">Skills</a>
+                  </li>
+
+                  <li>
+                     <a href="#contact" class="nav__contact">Contact me</a>
+                  </li>
+               </ul>
+
+               <button class="nav__close" id="nav-close" aria-label="Close menu">
+                  <i class="ri-close-large-line"></i>
+               </button>
+            </div>
+
+            <button class="nav__toggle" id="nav-toggle" aria-label="Toggle menu">
+               <i class="ri-menu-line"></i>
+            </button>
+         </nav>
+      </header>
+
+      <main class="main">
+         <section class="home section" id="home">
+            <div class="home__container container grid">
+               <div class="home__data">
+                  <p class="home__subtitle">Hi! I'm Yan</p>
+                  <h1 class="home__title">C++ Backend &amp;<br><span>Systems Developer</span></h1>
+                  <p class="home__description">Building backend systems from first principles.<br><span class="zh">专注 Linux 网络编程与服务端开发</span></p>
+               </div>
+               <div class="home__images">
+                  <img class="home__img" src="assets/img/hero-systems-violet.png" alt="Abstract violet systems composition" width="1024" height="1536">
+               </div>
+            </div>
+         </section>
+
+         <section class="about section" id="about">
+            <div class="about__container container grid">
+               <h2 class="about__title">About Me: Building backend systems with <span>C++ and Linux</span>, one layer at a time.</h2>
+               <div class="about__content">
+                  <p class="about__description">Focused on network programming, clear architecture and engineering fundamentals.<br><span class="zh">专注网络编程、清晰架构与工程基础</span></p>
+                  <a href="#contact" class="nav__contact">Contact me <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
+               </div>
+            </div>
+         </section>
+
+         <section class="work section" id="work">
+            <h2 class="section__title">Selected <span>Work</span></h2>
+            <div class="work__container container grid">
+               <article class="work__card">
+                  <span class="work__number">01</span>
+                  <h3 class="work__name">C++ WebServer</h3>
+                  <p class="work__description">C++17 · epoll · Reactor · HTTP server.<br><span class="zh">使用 C++17、epoll 和 Reactor 实现 HTTP 服务端</span></p>
+                  <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank" rel="noreferrer">GitHub ↗</a>
+               </article>
+            </div>
+         </section>
+
+         <section class="services section" id="service">
+            <h2 class="section__title">Engineering <span>Focus</span></h2>
+            <div class="services__container container grid">
+               <article class="services__card">
+                  <h3 class="services__name">Systems foundations</h3>
+                  <p class="services__description">C++ · Linux · POSIX · CMake</p>
+               </article>
+               <article class="services__card">
+                  <h3 class="services__name">Network programming</h3>
+                  <p class="services__description">Socket · epoll · Reactor · HTTP</p>
+               </article>
+               <article class="services__card">
+                  <h3 class="services__name">Next horizon</h3>
+                  <p class="services__description">Python tooling · databases · cloud-native · Go</p>
+               </article>
+            </div>
+         </section>
+
+         <section class="skills section" id="skills">
+            <h2 class="section__title">Learning <span>Route</span></h2>
+            <div class="skills__container container grid">
+               <p class="skills__description">Design → implement → document.<br><span class="zh">设计 实现 记录</span></p>
+               <div class="skills__list">
+                  <span>C++</span>
+                  <span>Linux</span>
+                  <span>Networking</span>
+                  <span>Git</span>
+                  <span>Algorithms</span>
+               </div>
+            </div>
+         </section>
+
+         <section class="contact section" id="contact">
+            <h2 class="section__title">Send a <span>Message</span></h2>
+            <div class="contact__container container grid">
+               <form class="contact__form" id="contact-form" novalidate>
+                  <div class="contact__honeypot" aria-hidden="true">
+                     <label for="company-website">Company website</label>
+                     <input id="company-website" type="text" name="company_website" tabindex="-1" autocomplete="off" data-honeypot>
+                  </div>
+                  <div class="contact__field" data-history-field="name">
+                     <input id="contact-name" type="text" name="name" placeholder="Name" aria-label="Name" aria-describedby="name-error" aria-invalid="false" autocomplete="off" maxlength="100" required>
+                     <div class="contact__history" id="name-history" role="listbox" aria-label="Saved names" hidden></div>
+                     <span class="contact__error" id="name-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+                  </div>
+                  <div class="contact__field" data-history-field="email">
+                     <input id="contact-email" type="email" name="email" placeholder="Email" aria-label="Email" aria-describedby="email-error" aria-invalid="false" autocomplete="off" inputmode="email" required>
+                     <div class="contact__history" id="email-history" role="listbox" aria-label="Saved email addresses" hidden></div>
+                     <span class="contact__error" id="email-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+                  </div>
+                  <div class="contact__field contact__field--message">
+                     <textarea id="contact-message" name="message" placeholder="Message" aria-label="Message" aria-describedby="message-error message-counter" aria-invalid="false" maxlength="1000" required></textarea>
+                     <span class="contact__error" id="message-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+                     <span class="contact__counter" id="message-counter">0 / 1000</span>
+                  </div>
+                  <button type="submit" class="nav__contact" id="send-message">
+                     <span class="contact__button-label" aria-live="polite">Send message</span>
+                     <i class="ri-arrow-right-line contact__button-icon" aria-hidden="true"></i>
+                  </button>
+               </form>
+               <aside class="contact__details" aria-label="Contact details">
+                  <a class="contact__card" href="mailto:ziyan.cs@proton.me">
+                     <i class="ri-mail-line contact__icon" aria-hidden="true"></i>
+                     <span><strong>Email</strong><small>ziyan.cs@proton.me</small></span>
+                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+                  </a>
+                  <div class="contact__card">
+                     <i class="ri-phone-line contact__icon" aria-hidden="true"></i>
+                     <span><strong>Phone</strong><small>Private · Email first</small></span>
+                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+                  </div>
+                  <div class="contact__card">
+                     <i class="ri-map-pin-line contact__icon" aria-hidden="true"></i>
+                     <span><strong>Location</strong><small>Shijiazhuang, Hebei, China</small></span>
+                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+                  </div>
+               </aside>
+            </div>
+         </section>
+      </main>
+
+      <footer class="footer">
+         <div class="footer__container container">
+            <blockquote class="footer__quote">
+               <p>MAKE IT WORK. MAKE IT RIGHT.<br>MAKE IT FAST.</p>
+               <cite>— Kent Beck</cite>
+            </blockquote>
+            <div class="footer__right">
+               <nav class="footer__links" aria-label="Footer navigation">
+                  <a href="#work">Works</a>
+                  <a href="#service">Focus</a>
+                  <a href="#skills">Skills</a>
+               </nav>
+               <div class="footer__socials">
+                  <a href="https://leetcode.cn/u/yan-emt/" target="_blank" rel="noreferrer" aria-label="LeetCode"><img src="https://cdn.simpleicons.org/leetcode/8B5CF6" alt="" width="22" height="22"></a>
+                  <a href="https://github.com/ziyan-cs" target="_blank" rel="noreferrer" aria-label="GitHub"><img src="https://cdn.simpleicons.org/github/8B5CF6" alt="" width="22" height="22"></a>
+               </div>
+            </div>
+         </div>
+         <p class="footer__copy">© 2026 ziyan-cs</p>
       </footer>
-  </body>
-  </html>
+
+      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
+      <script src="assets/js/emailjs-config.js"></script>
+      <script src="assets/js/emailjs-init.js"></script>
+      <script src="assets/js/main.js"></script>
+   </body>
+</html>
