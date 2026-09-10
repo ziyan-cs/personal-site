@@ -334,3 +334,36 @@ if (contactForm) {
     event.returnValue = '';
   });
 }
+
+/* Persistent custom cursor: the OS cursor remains hidden inside the page. */
+const cursorMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
+
+if (cursorMedia.matches) {
+  const cursor = document.createElement('span');
+  let hasPointerPosition = false;
+
+  cursor.className = 'light-cursor';
+  cursor.setAttribute('aria-hidden', 'true');
+  document.body.append(cursor);
+
+  const updateCursor = (event) => {
+    cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
+
+    if (!hasPointerPosition || !cursor.classList.contains('is-visible')) {
+      cursor.classList.add('is-visible');
+      hasPointerPosition = true;
+    }
+  };
+
+  const hideCursor = () => {
+    cursor.classList.remove('is-visible');
+  };
+
+  window.addEventListener('pointermove', updateCursor, { passive: true });
+  document.documentElement.addEventListener('pointerenter', updateCursor, { passive: true });
+  document.documentElement.addEventListener('pointerleave', hideCursor, { passive: true });
+
+  document.addEventListener('compositionstart', () => {
+    if (hasPointerPosition) cursor.classList.add('is-visible');
+  });
+}

@@ -67,7 +67,22 @@
                   <p class="home__description">Building backend systems from first principles.<br><span class="zh">专注 Linux 网络编程与服务端开发</span></p>
                </div>
                <div class="home__images">
-                  <img class="home__img" src="assets/img/hero-systems-violet.png" alt="Abstract violet systems composition" width="1024" height="1536">
+                  <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-labelledby="home-portrait-title" xmlns="http://www.w3.org/2000/svg">
+                     <title id="home-portrait-title">Portrait of Yan</title>
+                     <defs>
+                        <linearGradient id="home-composite-fade" x1="0" y1="420" x2="0" y2="491" gradientUnits="userSpaceOnUse">
+                           <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+                           <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                        </linearGradient>
+                        <mask id="home-composite-mask" x="-32" y="-20" width="543" height="520" maskUnits="userSpaceOnUse" mask-type="alpha">
+                           <rect x="-32" y="-20" width="543" height="520" fill="url(#home-composite-fade)"/>
+                        </mask>
+                     </defs>
+                     <g mask="url(#home-composite-mask)">
+                        <image href="assets/img/home-blob-purple.svg" x="0" y="0" width="479" height="467" aria-hidden="true"/>
+                        <image href="assets/img/portrait-yan.png" x="-19" y="-4" width="517" height="495"/>
+                     </g>
+                  </svg>
                </div>
             </div>
          </section>
@@ -95,19 +110,25 @@
          </section>
 
          <section class="services section" id="service">
-            <h2 class="section__title">Engineering <span>Focus</span></h2>
+            <h2 class="section__title">My <span>Services</span></h2>
             <div class="services__container container grid">
                <article class="services__card">
-                  <h3 class="services__name">Systems foundations</h3>
-                  <p class="services__description">C++ · Linux · POSIX · CMake</p>
+                  <span class="services__eyebrow">01 · SYSTEMS CORE</span>
+                  <h3 class="services__name">C++ foundations</h3>
+                  <p class="services__description">Resource ownership, concurrency and build organization.<br><span class="zh">关注资源管理、并发正确性与工程构建</span></p>
+                  <p class="services__stack">C++17 · Linux · POSIX · CMake</p>
                </article>
                <article class="services__card">
-                  <h3 class="services__name">Network programming</h3>
-                  <p class="services__description">Socket · epoll · Reactor · HTTP</p>
+                  <span class="services__eyebrow">02 · NETWORK SERVICES</span>
+                  <h3 class="services__name">Event-driven servers</h3>
+                  <p class="services__description">From event loops to connection lifecycle and HTTP handling.<br><span class="zh">从事件循环到连接管理，持续实现网络服务</span></p>
+                  <p class="services__stack">Socket · epoll · Reactor · HTTP</p>
                </article>
                <article class="services__card">
-                  <h3 class="services__name">Next horizon</h3>
-                  <p class="services__description">Python tooling · databases · cloud-native · Go</p>
+                  <span class="services__eyebrow">03 · ENGINEERING PRACTICE</span>
+                  <h3 class="services__name">Verifiable delivery</h3>
+                  <p class="services__description">Design, test, debug and measure before drawing conclusions.<br><span class="zh">用测试、调试与测量形成工程闭环</span></p>
+                  <p class="services__stack">Testing · Debugging · Profiling · Docs</p>
                </article>
             </div>
          </section>
@@ -115,14 +136,62 @@
          <section class="skills section" id="skills">
             <h2 class="section__title">Learning <span>Route</span></h2>
             <div class="skills__container container grid">
-               <p class="skills__description">Design → implement → document.<br><span class="zh">设计 实现 记录</span></p>
-               <div class="skills__list">
-                  <span>C++</span>
-                  <span>Linux</span>
-                  <span>Networking</span>
-                  <span>Git</span>
-                  <span>Algorithms</span>
+               <p class="skills__description">Understand → implement → verify → review<br><span class="zh">理解 实现 验证 复盘</span></p>
+
+               <div class="skills__groups">
+                  <article class="skills__group">
+                     <span class="skills__label">CORE</span>
+                     <h3 class="skills__name">Systems foundation</h3>
+                     <div class="skills__list">
+                        <span>C++17</span>
+                        <span>Linux</span>
+                        <span>POSIX</span>
+                        <span>CMake</span>
+                        <span>Git</span>
+                     </div>
+                  </article>
+
+                  <article class="skills__group">
+                     <span class="skills__label">BUILDING</span>
+                     <h3 class="skills__name">Backend practice</h3>
+                     <div class="skills__list">
+                        <span>Socket</span>
+                        <span>epoll</span>
+                        <span>Reactor</span>
+                        <span>HTTP</span>
+                        <span>Concurrency</span>
+                        <span>Testing</span>
+                     </div>
+                  </article>
+
+                  <article class="skills__group">
+                     <span class="skills__label">EXPLORING</span>
+                     <h3 class="skills__name">Service ecosystem</h3>
+                     <div class="skills__list">
+                        <span>Python</span>
+                        <span>MySQL</span>
+                        <span>Redis</span>
+                        <span>Go</span>
+                        <span>Observability</span>
+                        <span>Distributed systems</span>
+                     </div>
+                  </article>
                </div>
+
+               <a class="skills__notes" href="https://github.com/ziyan-cs/obsidian-coding-notes" target="_blank" rel="noreferrer">
+                  <span class="skills__notes-icon" aria-hidden="true">
+                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3.5 5.5A2.5 2.5 0 0 1 6 3h4a2 2 0 0 1 2 2v15a2.7 2.7 0 0 0-2.5-1.5H6A2.5 2.5 0 0 0 3.5 21z"/>
+                        <path d="M20.5 5.5A2.5 2.5 0 0 0 18 3h-4a2 2 0 0 0-2 2v15a2.7 2.7 0 0 1 2.5-1.5H18a2.5 2.5 0 0 1 2.5 2.5z"/>
+                     </svg>
+                  </span>
+                  <span class="skills__notes-copy">
+                     <span class="skills__label">PUBLIC NOTES</span>
+                     <strong>Obsidian Coding Notes</strong>
+                     <span>Structured notes for backend engineering<br><span class="zh">持续整理后端工程知识与实践</span></span>
+                  </span>
+                  <span class="skills__notes-arrow" aria-hidden="true">↗</span>
+               </a>
             </div>
          </section>
 

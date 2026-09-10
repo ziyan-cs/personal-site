@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 479 467" role="img" aria-labelledby="title desc">
+  <title id="title">Violet abstract profile shape</title>
+  <desc id="desc">A restrained violet gradient based on the organic home shape from the Bedimcode portfolio template</desc>
+  <defs>
+    <linearGradient id="violet" x1="72" y1="48" x2="415" y2="414" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B69AFF"/>
+      <stop offset="0.46" stop-color="#8654ED"/>
+      <stop offset="1" stop-color="#5420B9"/>
+    </linearGradient>
+    <radialGradient id="shine" cx="0" cy="0" r="1" gradientTransform="translate(148 112) rotate(46) scale(292 304)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF" stop-opacity="0.24"/>
+      <stop offset="0.42" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#16062F" stop-opacity="0.24"/>
+    </radialGradient>
+    <clipPath id="shape">
+      <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z"/>
+    </clipPath>
+    <filter id="soft-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z" fill="url(#violet)"/>
+  <path d="M9.19024 145.964C34.0253 76.5814 114.865 54.7299 184.111 29.4823C245.804 6.98884 311.86 -14.9503 370.735 14.143C431.207 44.026 467.948 107.508 477.191 174.311C485.897 237.229 454.931 294.377 416.506 344.954C373.74 401.245 326.068 462.801 255.442 466.189C179.416 469.835 111.552 422.137 65.1576 361.805C17.4835 299.81 -17.1617 219.583 9.19024 145.964Z" fill="url(#shine)"/>
+
+  <g clip-path="url(#shape)" fill="none" stroke="#E8DDFF" stroke-opacity="0.16">
+    <path d="M-20 315C75 236 156 224 242 266C325 306 390 295 515 196" stroke-width="1.5"/>
+    <path d="M-18 346C79 268 158 257 239 296C322 336 397 324 508 229"/>
+    <path d="M113 38C158 91 193 134 249 153C305 172 369 156 438 111"/>
+    <circle cx="247" cy="268" r="119" stroke-opacity="0.1"/>
+    <circle cx="247" cy="268" r="82" stroke-opacity="0.1"/>
+  </g>
+
+  <ellipse cx="170" cy="82" rx="95" ry="46" fill="#D9CBFF" fill-opacity="0.12" filter="url(#soft-glow)"/>
+</svg>

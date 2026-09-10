@@ -1,0 +1,8 @@
+node_modules/
+.npm-cache/
+.wrangler/
+.wrangler-config/
+.wrangler-dry-run/
+.wrangler-preview-dry-run/
+.dev.vars
+.env

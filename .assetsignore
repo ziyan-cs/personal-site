@@ -1,0 +1,14 @@
+.git
+.github
+.npm-cache
+.wrangler
+.wrangler-config
+.wrangler-dry-run
+.wrangler-preview-dry-run
+contact-worker
+node_modules
+.assetsignore
+.gitignore
+package.json
+package-lock.json
+wrangler.jsonc
