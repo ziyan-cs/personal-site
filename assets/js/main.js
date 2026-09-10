@@ -295,6 +295,7 @@ if (contactForm) {
       turnstileWidgetId = window.turnstile.render(turnstileMount, {
         sitekey: contactWorkerConfig.turnstileSiteKey,
         action: 'contact',
+        appearance: 'interaction-only',
         theme: 'dark',
         size: 'flexible',
         callback(token) {
@@ -356,6 +357,24 @@ if (contactForm) {
     }
   }
 
+  function shakeInvalidFields(invalidFields) {
+    const containers = invalidFields
+      .map((field) => field.closest('.contact__field'))
+      .filter(Boolean);
+
+    containers.forEach((container) => container.classList.remove('contact__field--shake'));
+    void contactForm.offsetWidth;
+
+    containers.forEach((container, index) => {
+      container.style.setProperty('--field-shake-delay', `${index * 45}ms`);
+      container.classList.add('contact__field--shake');
+      window.setTimeout(() => {
+        container.classList.remove('contact__field--shake');
+        container.style.removeProperty('--field-shake-delay');
+      }, 520 + index * 45);
+    });
+  }
+
   function validateForm() {
     const name = contactForm.elements.name;
     const email = contactForm.elements.email;
@@ -372,7 +391,9 @@ if (contactForm) {
     );
     setFieldError(message, message.value.trim() ? '' : 'Required');
 
-    const firstInvalidField = fields.find((field) => field.getAttribute('aria-invalid') === 'true');
+    const invalidFields = fields.filter((field) => field.getAttribute('aria-invalid') === 'true');
+    const firstInvalidField = invalidFields[0];
+    if (firstInvalidField) shakeInvalidFields(invalidFields);
     firstInvalidField?.focus();
     if (firstInvalidField) closeHistoryMenus();
 
@@ -468,6 +489,20 @@ if (contactForm) {
 
     input.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') field.querySelector('.contact__history').hidden = true;
+    });
+  });
+
+  const fieldNavigation = new Map([
+    [contactForm.elements.name, contactForm.elements.email],
+    [contactForm.elements.email, messageField],
+  ]);
+
+  fieldNavigation.forEach((nextField, field) => {
+    field.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.isComposing) return;
+
+      event.preventDefault();
+      nextField.focus();
     });
   });
 

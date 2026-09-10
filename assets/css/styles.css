@@ -764,11 +764,12 @@ img {
 .contact__form { display: grid; gap: 1.15rem; }
 .contact__honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .contact__field { position: relative; }
+.contact__field--shake { animation: contact-field-shake .42s cubic-bezier(.36, .07, .19, .97) var(--field-shake-delay, 0ms) both; }
 .contact__form input, .contact__form textarea { width: 100%; background: var(--container-color); border: 1px solid var(--border-color); border-radius: 1.5rem; padding: 1rem 1.25rem; color: var(--white-color); }
 .contact__form input[aria-invalid="true"], .contact__form textarea[aria-invalid="true"] { border-color: hsl(355, 76%, 62%); box-shadow: 0 0 0 3px hsla(355, 76%, 62%, .1); }
 .contact__field--invalid input, .contact__field--invalid textarea { padding-right: 8rem; }
 .contact__form textarea { height: 150px; resize: none; overflow-y: auto; scrollbar-gutter: stable; padding-bottom: 2.5rem; color-scheme: dark; }
-.contact__turnstile { min-height: 65px; overflow: hidden; }
+.contact__turnstile { min-height: 0; overflow: hidden; }
 .contact__turnstile[hidden] { display: none; }
 .contact__form .nav__contact { justify-self: stretch; display: inline-flex; justify-content: center; align-items: center; gap: .5rem; width: 100%; cursor: pointer; }
 .contact__form .nav__contact:disabled { cursor: not-allowed; opacity: .82; }
@@ -784,6 +785,13 @@ img {
 
 @keyframes button-spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes contact-field-shake {
+  0%, 100% { transform: translateX(0); }
+  22% { transform: translateX(-6px); }
+  48% { transform: translateX(5px); }
+  72% { transform: translateX(-3px); }
 }
 .contact__history { position: absolute; top: calc(100% + .4rem); right: .4rem; z-index: var(--z-tooltip); width: min(82%, 22rem); overflow: hidden; padding: .3rem; background: hsl(var(--hue), 12%, 6%); border: 1px solid hsl(var(--hue), 8%, 15%); border-radius: .85rem; box-shadow: 0 14px 34px hsla(var(--hue), 20%, 2%, .58); }
 .contact__history[hidden] { display: none; }
@@ -913,7 +921,7 @@ img {
   .learning__steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   .contact__container { grid-template-columns: 1fr .85fr; column-gap: 5rem; align-items: start; padding-bottom: var(--space-5); }
   .contact__form textarea { height: 180px; }
-  .contact__details { align-self: end; transform: translateY(-4.5rem); }
+  .contact__details { align-self: end; transform: translateY(-5rem); }
   .footer { padding-top: 1.5rem; }
   .footer__container { grid-template-columns: 1fr auto; align-items: end; }
   .footer__quote p { font-size: 3rem; }
