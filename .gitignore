@@ -1,3 +1,11 @@
+<<<<<<< HEAD
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
+=======
 node_modules/
 .npm-cache/
 .wrangler/
@@ -6,3 +14,4 @@ node_modules/
 .wrangler-preview-dry-run/
 .dev.vars
 .env
+>>>>>>> origin/main

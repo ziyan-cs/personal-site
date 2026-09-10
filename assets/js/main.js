@@ -1,19 +1,50 @@
 const navMenu = document.getElementById('nav-menu');
 const navToggle = document.getElementById('nav-toggle');
 const navClose = document.getElementById('nav-close');
+const navScrim = document.getElementById('nav-scrim');
 const header = document.getElementById('header');
 const contactForm = document.getElementById('contact-form');
 
+const setMobileMenu = (isOpen) => {
+  navMenu?.classList.toggle('show-menu', isOpen);
+  navScrim?.classList.toggle('show-menu', isOpen);
+  navToggle?.setAttribute('aria-expanded', String(isOpen));
+  document.body.classList.toggle('nav-open', isOpen);
+};
+
 navToggle?.addEventListener('click', () => {
-  navMenu?.classList.add('show-menu');
+  setMobileMenu(!navMenu?.classList.contains('show-menu'));
 });
 
 navClose?.addEventListener('click', () => {
-  navMenu?.classList.remove('show-menu');
+  setMobileMenu(false);
 });
 
-document.querySelectorAll('.nav .nav__link, .nav .nav__contact').forEach((link) => {
-  link.addEventListener('click', () => navMenu?.classList.remove('show-menu'));
+navScrim?.addEventListener('click', () => {
+  setMobileMenu(false);
+});
+
+document.addEventListener('pointerdown', (event) => {
+  if (!navMenu?.classList.contains('show-menu')) return;
+  if (navMenu.contains(event.target) || navToggle?.contains(event.target)) return;
+
+  event.preventDefault();
+  setMobileMenu(false);
+}, { capture: true });
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && navMenu?.classList.contains('show-menu')) {
+    setMobileMenu(false);
+    navToggle?.focus();
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 1024) setMobileMenu(false);
+}, { passive: true });
+
+document.querySelectorAll('#nav-menu .nav__link').forEach((link) => {
+  link.addEventListener('click', () => setMobileMenu(false));
 });
 
 document.querySelector('.nav__link[href="#home"]')?.addEventListener('click', (event) => {
@@ -80,6 +111,56 @@ window.addEventListener('resize', updateActiveNavigation, { passive: true });
 window.addEventListener('scrollend', finishNavigationScroll, { passive: true });
 updateHeader();
 updateActiveNavigation();
+
+const revealGroups = [
+  ['#about .about__title', '#about .about__content'],
+  ['#projects .section__title', '#projects .work__card'],
+  ['#focus .section__title', '#focus .services__card'],
+  ['#skills .section__title', '#skills .skills__description', '#skills .learning__step'],
+  ['#contact .section__title', '#contact .contact__form', '#contact .contact__details'],
+  ['.footer__quote', '.footer__right', '.footer__copy']
+];
+
+const revealElements = [];
+
+revealGroups.forEach((selectors) => {
+  const groupElements = selectors.flatMap((selector) => [...document.querySelectorAll(selector)]);
+
+  groupElements.forEach((element, index) => {
+    element.classList.add('scroll-reveal');
+    element.style.setProperty('--reveal-delay', `${Math.min(index * 85, 255)}ms`);
+    revealElements.push(element);
+  });
+});
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const initiallyVisible = revealElements.filter((element) => element.getBoundingClientRect().top < window.innerHeight);
+
+initiallyVisible.forEach((element) => element.classList.add('is-visible', 'reveal-complete'));
+document.documentElement.classList.add('reveal-ready');
+
+if (reduceMotion || !('IntersectionObserver' in window)) {
+  revealElements.forEach((element) => element.classList.add('is-visible', 'reveal-complete'));
+} else {
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+
+      entry.target.classList.add('is-visible');
+      entry.target.addEventListener('transitionend', () => {
+        entry.target.classList.add('reveal-complete');
+      }, { once: true });
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: .12,
+    rootMargin: '0px 0px -8% 0px'
+  });
+
+  revealElements
+    .filter((element) => !element.classList.contains('is-visible'))
+    .forEach((element) => revealObserver.observe(element));
+}
 
 if (contactForm) {
   const fields = [...contactForm.querySelectorAll('input:not([data-honeypot]), textarea')];
