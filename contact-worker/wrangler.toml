@@ -4,3 +4,13 @@ compatibility_date = "2026-09-09"
 
 [vars]
 ALLOWED_ORIGIN = "https://ziyan-cs.com"
+FROM_EMAIL = "ziyan-cs <contact@ziyan-cs.com>"
+RECIPIENT_EMAIL = "ziyan.cs@proton.me"
+
+[[durable_objects.bindings]]
+name = "CONTACT_RATE_LIMIT"
+class_name = "ContactRateLimiter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["ContactRateLimiter"]

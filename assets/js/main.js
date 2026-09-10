@@ -171,6 +171,8 @@ if (contactForm) {
   const sendButton = document.getElementById('send-message');
   const sendButtonLabel = sendButton?.querySelector('.contact__button-label');
   const sendButtonIcon = sendButton?.querySelector('.contact__button-icon');
+  const turnstileMount = document.getElementById('contact-turnstile');
+  const contactWorkerConfig = window.CONTACT_WORKER_CONFIG || {};
   const storageKey = 'ziyan-cs.contact-history';
   const sendLogKey = 'ziyan-cs.contact-send-log';
   const historyLimit = 6;
@@ -181,6 +183,8 @@ if (contactForm) {
   const earliestSubmitTime = Date.now() + 1500;
   const hasDraft = () => fields.some((field) => field.value.trim() !== '');
   let cooldownTimer;
+  let turnstileToken = '';
+  let turnstileWidgetId;
   let contactHistory = loadHistory();
 
   function loadHistory() {
@@ -221,7 +225,7 @@ if (contactForm) {
     try {
       localStorage.setItem(sendLogKey, JSON.stringify([...loadSendLog(), Date.now()]));
     } catch {
-      // EmailJS still works when local storage is unavailable.
+      // Form delivery remains available when local storage is unavailable.
     }
   }
 
@@ -262,17 +266,80 @@ if (contactForm) {
     setButtonState('default', 'Send message', 'ri-arrow-right-line');
   }
 
-  function emailJsIsConfigured() {
-    const config = window.EMAILJS_CONFIG;
+  function workerIsConfigured() {
+    const { endpoint, turnstileSiteKey } = contactWorkerConfig;
 
     return Boolean(
-      window.emailjs &&
-      window.EMAILJS_READY &&
-      config?.publicKey &&
-      config?.serviceId &&
-      config?.templateId &&
-      !Object.values(config).some((value) => value.startsWith('YOUR_')),
+      typeof endpoint === 'string' &&
+      typeof turnstileSiteKey === 'string' &&
+      endpoint.startsWith('https://') &&
+      turnstileSiteKey.length > 10,
     );
+  }
+
+  function resetTurnstile() {
+    turnstileToken = '';
+    if (turnstileWidgetId !== undefined && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  function initializeTurnstile() {
+    if (!workerIsConfigured() || !turnstileMount) return;
+
+    turnstileMount.hidden = false;
+
+    const render = () => {
+      if (!window.turnstile || turnstileWidgetId !== undefined) return;
+
+      turnstileWidgetId = window.turnstile.render(turnstileMount, {
+        sitekey: contactWorkerConfig.turnstileSiteKey,
+        action: 'contact',
+        theme: 'dark',
+        size: 'flexible',
+        callback(token) {
+          turnstileToken = token;
+        },
+        'expired-callback'() {
+          turnstileToken = '';
+        },
+        'error-callback'() {
+          turnstileToken = '';
+        },
+      });
+    };
+
+    if (window.turnstile) {
+      render();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.onload = render;
+    document.head.append(script);
+  }
+
+  async function sendWithWorker() {
+    const response = await fetch(contactWorkerConfig.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: contactForm.elements.name.value.trim(),
+        email: contactForm.elements.email.value.trim(),
+        message: contactForm.elements.message.value.trim(),
+        website: honeypotField?.value || '',
+        turnstileToken,
+      }),
+    });
+
+    if (response.ok) return;
+
+    const body = await response.json().catch(() => ({}));
+    const error = new Error(body.error || 'Send failed');
+    error.status = response.status;
+    throw error;
   }
 
   function setFieldError(field, message = '') {
@@ -410,6 +477,7 @@ if (contactForm) {
 
   messageField.addEventListener('input', updateMessageCounter);
   updateMessageCounter();
+  initializeTurnstile();
   startCooldown();
 
   document.addEventListener('click', (event) => {
@@ -430,8 +498,16 @@ if (contactForm) {
 
     rememberIdentity();
 
-    if (!emailJsIsConfigured()) {
-      setButtonState('error', 'EmailJS setup required', 'ri-alert-line');
+    const useContactWorker = workerIsConfigured();
+
+    if (!useContactWorker) {
+      setButtonState('error', 'Contact service unavailable', 'ri-alert-line');
+      setTimeout(startCooldown, 3200);
+      return;
+    }
+
+    if (useContactWorker && !turnstileToken) {
+      setButtonState('error', 'Complete verification', 'ri-shield-check-line');
       setTimeout(startCooldown, 3200);
       return;
     }
@@ -446,17 +522,19 @@ if (contactForm) {
     setButtonState('sending', 'Sending…', 'ri-loader-4-line');
 
     try {
-      const config = window.EMAILJS_CONFIG;
-      await window.emailjs.sendForm(config.serviceId, config.templateId, contactForm);
+      await sendWithWorker();
 
       saveSuccessfulSend();
       contactForm.reset();
+      resetTurnstile();
       fields.forEach((field) => setFieldError(field));
       updateMessageCounter();
       setButtonState('success', 'Message sent', 'ri-check-line');
       setTimeout(startCooldown, 2400);
-    } catch {
-      setButtonState('error', 'Send failed · Retry', 'ri-refresh-line');
+    } catch (error) {
+      resetTurnstile();
+      const label = error?.status === 429 ? 'Please try again later' : 'Send failed · Retry';
+      setButtonState('error', label, 'ri-refresh-line');
       setTimeout(startCooldown, 3200);
     }
   });

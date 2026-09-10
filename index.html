@@ -2,12 +2,32 @@
 <html lang="zh-CN">
    <head>
       <meta charset="UTF-8">
-      <meta name="description" content="ziyan-cs · 个人作品集">
+      <meta name="description" content="ziyan-cs 的个人作品集，专注 C++ 后端、Linux 网络编程与系统实践">
       <meta name="robots" content="index, follow">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="referrer" content="strict-origin-when-cross-origin">
-      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.simpleicons.org; connect-src 'self' https://api.emailjs.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+      <meta name="author" content="ziyan-cs">
+      <meta name="theme-color" content="#08080C">
+      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.simpleicons.org; connect-src 'self' https://ziyan-cs-contact.ziyan-cs.workers.dev https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
       <link rel="icon" href="assets/img/ziyan-mark.svg" type="image/svg+xml">
+      <link rel="canonical" href="https://ziyan-cs.com/">
+      <meta property="og:type" content="website">
+      <meta property="og:site_name" content="ziyan-cs">
+      <meta property="og:url" content="https://ziyan-cs.com/">
+      <meta property="og:title" content="ziyan-cs · C++ Backend &amp; Systems Developer">
+      <meta property="og:description" content="Build. Learn. Commit. 专注 C++ 后端、Linux 网络编程与系统实践">
+      <meta property="og:image" content="https://ziyan-cs.com/assets/img/og-cover.png">
+      <meta property="og:image:width" content="1200">
+      <meta property="og:image:height" content="630">
+      <meta property="og:image:alt" content="ziyan-cs · C++ Backend &amp; Systems Developer">
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:title" content="ziyan-cs · C++ Backend &amp; Systems Developer">
+      <meta name="twitter:description" content="Build. Learn. Commit. 专注 C++ 后端、Linux 网络编程与系统实践">
+      <meta name="twitter:image" content="https://ziyan-cs.com/assets/img/og-cover.png">
+      <script type="application/ld+json">
+         {"@context":"https://schema.org","@type":"Person","name":"ziyan-cs","url":"https://ziyan-cs.com/","jobTitle":"C++ Backend & Systems Developer","sameAs":["https://github.com/ziyan-cs","https://leetcode.cn/u/yan-emt/"]}
+      </script>
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"version":"2024.11.0","token":"16fbe04620a14f1690fe17bc960e076c","r":1,"spa":2}'></script>
       <script src="assets/js/boot.js"></script>
 
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
@@ -21,6 +41,7 @@
       <title>ziyan-cs · 个人作品集</title>
    </head>
    <body>
+      <a class="skip-link" href="#main-content">跳到主要内容</a>
       <header class="header" id="header">
          <nav class="nav container">
             <a href="/" class="nav__logo"><img class="nav__brand-mark" src="assets/img/ziyan-mark.svg" alt="" width="30" height="30">ziyan-cs</a>
@@ -61,7 +82,7 @@
          </nav>
       </header>
 
-      <main class="main">
+      <main class="main" id="main-content" tabindex="-1">
          <section class="home section" id="home">
             <div class="home__container container grid">
                <div class="home__data">
@@ -70,7 +91,7 @@
                   <p class="home__description">Build. Learn. Commit.<br><span class="zh">以 C++ 后端为主线，把原理写进代码，把实践沉淀为可复习的知识</span></p>
                </div>
                <div class="home__images">
-                  <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-label="Yan" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-label="Yan 的个人照片" xmlns="http://www.w3.org/2000/svg">
                      <defs>
                         <linearGradient id="home-composite-fade" x1="0" y1="420" x2="0" y2="491" gradientUnits="userSpaceOnUse">
                            <stop offset="0" stop-color="#fff" stop-opacity="1"/>
@@ -120,7 +141,7 @@
                   </div>
                   <div class="work__footer">
                      <span class="work__meta">C++17 · CMake · Linux · HTTP/1.1</span>
-                     <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+                     <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank" rel="noreferrer" aria-label="在 GitHub 打开 C++ Web Server">View on GitHub ↗</a>
                   </div>
                </article>
 
@@ -140,7 +161,7 @@
                   <p class="work__description">A roadmap-driven backend learning notebook.<br><span class="zh">按知识地图组织主题，以 30 秒复述、最小实践、自测和间隔复习形成闭环，长期沉淀可检索、可验证、可持续更新的知识</span></p>
                   <div class="work__footer">
                      <span class="work__meta">Obsidian · Git · Markdown</span>
-                     <a href="https://github.com/ziyan-cs/obsidian-coding-notes" class="work__link" target="_blank" rel="noreferrer">Read notes ↗</a>
+                     <a href="https://github.com/ziyan-cs/obsidian-coding-notes" class="work__link" target="_blank" rel="noreferrer" aria-label="在 GitHub 打开 Obsidian Coding Notes">Read notes ↗</a>
                   </div>
                </article>
             </div>
@@ -264,6 +285,7 @@
                      <span class="contact__error" id="message-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
                      <span class="contact__counter" id="message-counter">0 / 1000</span>
                   </div>
+                  <div class="contact__turnstile" id="contact-turnstile" aria-live="polite" hidden></div>
                   <button type="submit" class="nav__contact" id="send-message">
                      <span class="contact__button-label" aria-live="polite">Send message</span>
                      <i class="ri-arrow-right-line contact__button-icon" aria-hidden="true"></i>
@@ -311,9 +333,7 @@
          <p class="footer__copy">© 2026 ziyan-cs</p>
       </footer>
 
-      <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4.4.1/dist/email.min.js"></script>
-      <script src="assets/js/emailjs-config.js"></script>
-      <script src="assets/js/emailjs-init.js"></script>
+      <script src="assets/js/contact-worker-config.js"></script>
       <script src="assets/js/main.js"></script>
    </body>
 </html>
