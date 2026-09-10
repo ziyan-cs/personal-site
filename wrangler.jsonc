@@ -1,23 +1,8 @@
 {
-<<<<<<< HEAD
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "personal-site",
-  "compatibility_date": "2026-07-27",
-  "observability": {
-    "enabled": true
-  },
-  "assets": {
-    "directory": "."
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
-=======
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "personal-site",
   "compatibility_date": "2026-09-10",
   "assets": {
     "directory": "./"
   }
->>>>>>> origin/main
 }
