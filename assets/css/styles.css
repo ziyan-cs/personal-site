@@ -116,10 +116,46 @@ a {
   text-decoration: none;
 }
 
+:where(a, button, input, textarea):focus-visible {
+  outline: 2px solid var(--accent-text-color);
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: .75rem;
+  left: .75rem;
+  z-index: calc(var(--z-fixed) + 1);
+  padding: .7rem 1rem;
+  border-radius: .75rem;
+  color: var(--black-color);
+  background: var(--white-color);
+  font-weight: var(--font-semi-bold);
+  transform: translateY(-180%);
+  transition: transform .2s ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
 }
 
 /*=============== REUSABLE CSS CLASSES ===============*/
@@ -732,6 +768,8 @@ img {
 .contact__form input[aria-invalid="true"], .contact__form textarea[aria-invalid="true"] { border-color: hsl(355, 76%, 62%); box-shadow: 0 0 0 3px hsla(355, 76%, 62%, .1); }
 .contact__field--invalid input, .contact__field--invalid textarea { padding-right: 8rem; }
 .contact__form textarea { height: 150px; resize: none; overflow-y: auto; scrollbar-gutter: stable; padding-bottom: 2.5rem; color-scheme: dark; }
+.contact__turnstile { min-height: 65px; overflow: hidden; }
+.contact__turnstile[hidden] { display: none; }
 .contact__form .nav__contact { justify-self: stretch; display: inline-flex; justify-content: center; align-items: center; gap: .5rem; width: 100%; cursor: pointer; }
 .contact__form .nav__contact:disabled { cursor: not-allowed; opacity: .82; }
 .contact__form .nav__contact.is-sending .contact__button-icon { animation: button-spin .8s linear infinite; }

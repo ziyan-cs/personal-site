@@ -1,4 +1,7 @@
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const COOLDOWN_MS = 60 * 1000;
+const DAILY_LIMIT = 5;
+const DAILY_WINDOW_MS = 24 * 60 * 60 * 1000;
 
 function corsHeaders(origin) {
   return {
@@ -28,7 +31,9 @@ function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (character) => entities[character]);
 }
 
-async function verifyTurnstile(request, secret, token) {
+async function verifyTurnstile(request, secret, token, expectedHostname) {
+  if (typeof token !== 'string' || token.length === 0 || token.length > 2048) return false;
+
   const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -42,7 +47,24 @@ async function verifyTurnstile(request, secret, token) {
   if (!response.ok) return false;
 
   const result = await response.json();
-  return result.success === true;
+  return (
+    result.success === true &&
+    result.action === 'contact' &&
+    result.hostname === expectedHostname
+  );
+}
+
+async function rateLimitKey(request) {
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  const bytes = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip)));
+  return [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+async function reserveSendSlot(env, request) {
+  const id = env.CONTACT_RATE_LIMIT.idFromName(await rateLimitKey(request));
+  const limiter = env.CONTACT_RATE_LIMIT.get(id);
+  const response = await limiter.fetch('https://contact-rate-limit/reserve', { method: 'POST' });
+  return response.json();
 }
 
 async function deliverMessage(env, { name, email, message }) {
@@ -109,10 +131,26 @@ export default {
     }
 
     try {
-      const isHuman = await verifyTurnstile(request, env.TURNSTILE_SECRET, turnstileToken);
+      const expectedHostname = new URL(allowedOrigin).hostname;
+      const isHuman = await verifyTurnstile(
+        request,
+        env.TURNSTILE_SECRET,
+        turnstileToken,
+        expectedHostname,
+      );
 
       if (!isHuman) {
         return jsonResponse({ error: 'Verification failed' }, 400, allowedOrigin);
+      }
+
+      const rateLimit = await reserveSendSlot(env, request);
+
+      if (!rateLimit.allowed) {
+        return jsonResponse(
+          { error: 'Rate limit exceeded', retry_after: rateLimit.retryAfter },
+          429,
+          allowedOrigin,
+        );
       }
 
       const delivery = await deliverMessage(env, { name, email, message });
@@ -127,3 +165,40 @@ export default {
     return jsonResponse({ ok: true }, 200, allowedOrigin);
   },
 };
+
+export class ContactRateLimiter {
+  constructor(ctx) {
+    this.ctx = ctx;
+  }
+
+  async fetch() {
+    const now = Date.now();
+    const events = (await this.ctx.storage.get('send_events')) || [];
+    const recentEvents = events.filter((timestamp) => now - timestamp < DAILY_WINDOW_MS);
+    const lastSend = recentEvents.at(-1) || 0;
+
+    if (now - lastSend < COOLDOWN_MS) {
+      return Response.json({
+        allowed: false,
+        retryAfter: Math.ceil((lastSend + COOLDOWN_MS - now) / 1000),
+      });
+    }
+
+    if (recentEvents.length >= DAILY_LIMIT) {
+      return Response.json({
+        allowed: false,
+        retryAfter: Math.ceil((recentEvents[0] + DAILY_WINDOW_MS - now) / 1000),
+      });
+    }
+
+    recentEvents.push(now);
+    await this.ctx.storage.put('send_events', recentEvents);
+    await this.ctx.storage.setAlarm(now + DAILY_WINDOW_MS);
+
+    return Response.json({ allowed: true });
+  }
+
+  async alarm() {
+    await this.ctx.storage.deleteAll();
+  }
+}

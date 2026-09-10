@@ -1,17 +1,15 @@
-<<<<<<< HEAD
-# wrangler files
-.wrangler
-.dev.vars*
-!.dev.vars.example
-.env*
-!.env.example
-=======
+# Dependencies and package caches
 node_modules/
 .npm-cache/
+
+# Wrangler files
 .wrangler/
 .wrangler-config/
 .wrangler-dry-run/
 .wrangler-preview-dry-run/
-.dev.vars
-.env
->>>>>>> origin/main
+
+# Local secrets
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
