@@ -2,7 +2,7 @@
 <html lang="zh-CN">
    <head>
       <meta charset="UTF-8">
-      <meta name="description" content="ziyan-cs — C++ backend, Linux network programming and systems engineering.">
+      <meta name="description" content="ziyan-cs · 个人作品集">
       <meta name="robots" content="index, follow">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -17,7 +17,7 @@
 
       <link rel="stylesheet" href="assets/css/styles.css">
 
-      <title>ziyan-cs · C++ Backend Engineer</title>
+      <title>ziyan-cs · 个人作品集</title>
    </head>
    <body>
       <header class="header" id="header">
@@ -27,23 +27,23 @@
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
                   <li>
-                     <a href="#home" class="nav__link active-link">Home</a>
+                     <a href="#home" class="nav__link active-link"><i class="ri-home-5-line nav__icon" aria-hidden="true"></i><span>Home</span></a>
                   </li>
 
                   <li>
-                     <a href="#work" class="nav__link">Works</a>
+                     <a href="#work" class="nav__link"><i class="ri-code-box-line nav__icon" aria-hidden="true"></i><span>Works</span></a>
                   </li>
 
                   <li>
-                     <a href="#service" class="nav__link">My Services</a>
+                     <a href="#service" class="nav__link"><i class="ri-server-line nav__icon" aria-hidden="true"></i><span>My Services</span></a>
                   </li>
 
                   <li>
-                     <a href="#skills" class="nav__link">Skills</a>
+                     <a href="#skills" class="nav__link"><i class="ri-stack-line nav__icon" aria-hidden="true"></i><span>Skills</span></a>
                   </li>
 
                   <li>
-                     <a href="#contact" class="nav__contact">Contact me</a>
+                     <a href="#contact" class="nav__link nav__contact nav__menu-contact"><i class="ri-mail-send-line nav__icon" aria-hidden="true"></i><span>Contact me</span></a>
                   </li>
                </ul>
 
@@ -64,50 +64,70 @@
                <div class="home__data">
                   <p class="home__subtitle">Hi! I'm Yan</p>
                   <h1 class="home__title">C++ Backend &amp;<br><span>Systems Developer</span></h1>
-                  <p class="home__description">Building backend systems from first principles.<br><span class="zh">专注 Linux 网络编程与服务端开发</span></p>
+                  <p class="home__description">Building reliable backend systems from first principles.<br><span class="zh">专注 C++、Linux 网络编程与后端系统实践</span></p>
                </div>
                <div class="home__images">
-                  <img class="home__img" src="assets/img/hero-systems-violet.png" alt="Abstract violet systems composition" width="1024" height="1536">
+                  <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-label="Yan" xmlns="http://www.w3.org/2000/svg">
+                     <defs>
+                        <linearGradient id="home-composite-fade" x1="0" y1="420" x2="0" y2="491" gradientUnits="userSpaceOnUse">
+                           <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+                           <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+                        </linearGradient>
+                        <mask id="home-composite-mask" x="-32" y="-20" width="543" height="520" maskUnits="userSpaceOnUse" mask-type="alpha">
+                           <rect x="-32" y="-20" width="543" height="520" fill="url(#home-composite-fade)"/>
+                        </mask>
+                     </defs>
+                     <g mask="url(#home-composite-mask)">
+                        <image href="assets/img/home-blob-purple.svg" x="0" y="0" width="479" height="467" aria-hidden="true"/>
+                        <image href="assets/img/portrait-yan.png" x="-19" y="-4" width="517" height="495"/>
+                     </g>
+                  </svg>
                </div>
             </div>
          </section>
 
          <section class="about section" id="about">
             <div class="about__container container grid">
-               <h2 class="about__title">About Me: Building backend systems with <span>C++ and Linux</span>, one layer at a time.</h2>
+               <h2 class="about__title">About Me: Turning <span>C++ and Linux</span> fundamentals into reliable backend systems.</h2>
                <div class="about__content">
-                  <p class="about__description">Focused on network programming, clear architecture and engineering fundamentals.<br><span class="zh">专注网络编程、清晰架构与工程基础</span></p>
+                  <p class="about__description">Focused on network programming, systems design and verifiable engineering.<br><span class="zh">专注网络编程、系统设计与可验证的工程实践</span></p>
                   <a href="#contact" class="nav__contact">Contact me <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
                </div>
             </div>
          </section>
 
          <section class="work section" id="work">
-            <h2 class="section__title">Selected <span>Work</span></h2>
+            <h2 class="section__title">Featured <span>Project</span></h2>
             <div class="work__container container grid">
                <article class="work__card">
                   <span class="work__number">01</span>
-                  <h3 class="work__name">C++ WebServer</h3>
-                  <p class="work__description">C++17 · epoll · Reactor · HTTP server.<br><span class="zh">使用 C++17、epoll 和 Reactor 实现 HTTP 服务端</span></p>
+                  <h3 class="work__name">C++ Web Server</h3>
+                  <p class="work__description">A high-performance HTTP server built with C++17, epoll and the Reactor pattern.<br><span class="zh">基于 C++17、epoll 与 Reactor 模型构建的高性能 HTTP 服务器</span></p>
                   <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank" rel="noreferrer">GitHub ↗</a>
                </article>
             </div>
          </section>
 
          <section class="services section" id="service">
-            <h2 class="section__title">Engineering <span>Focus</span></h2>
+            <h2 class="section__title">My <span>Services</span></h2>
             <div class="services__container container grid">
                <article class="services__card">
-                  <h3 class="services__name">Systems foundations</h3>
-                  <p class="services__description">C++ · Linux · POSIX · CMake</p>
+                  <span class="services__eyebrow">01 · SYSTEMS CORE</span>
+                  <h3 class="services__name">Systems Foundations</h3>
+                  <p class="services__description">Resource ownership, concurrency control and reproducible builds.<br><span class="zh">关注资源管理、并发控制与可复现构建</span></p>
+                  <p class="services__stack">C++17 · Linux · POSIX · CMake</p>
                </article>
                <article class="services__card">
-                  <h3 class="services__name">Network programming</h3>
-                  <p class="services__description">Socket · epoll · Reactor · HTTP</p>
+                  <span class="services__eyebrow">02 · NETWORK SERVICES</span>
+                  <h3 class="services__name">Network Services</h3>
+                  <p class="services__description">Event-driven architecture, connection lifecycles and HTTP protocol handling.<br><span class="zh">实践事件驱动架构、连接生命周期与 HTTP 协议处理</span></p>
+                  <p class="services__stack">Socket · epoll · Reactor · HTTP</p>
                </article>
                <article class="services__card">
-                  <h3 class="services__name">Next horizon</h3>
-                  <p class="services__description">Python tooling · databases · cloud-native · Go</p>
+                  <span class="services__eyebrow">03 · ENGINEERING PRACTICE</span>
+                  <h3 class="services__name">Engineering Quality</h3>
+                  <p class="services__description">Testing, debugging and profiling supported by clear documentation.<br><span class="zh">通过测试、调试、性能分析与文档保障工程质量</span></p>
+                  <p class="services__stack">Testing · Debugging · Profiling · Docs</p>
                </article>
             </div>
          </section>
@@ -115,14 +135,65 @@
          <section class="skills section" id="skills">
             <h2 class="section__title">Learning <span>Route</span></h2>
             <div class="skills__container container grid">
-               <p class="skills__description">Design → implement → document.<br><span class="zh">设计 实现 记录</span></p>
-               <div class="skills__list">
-                  <span>C++</span>
-                  <span>Linux</span>
-                  <span>Networking</span>
-                  <span>Git</span>
-                  <span>Algorithms</span>
+               <p class="skills__description">Understand → build → validate → refine<br><span class="zh">理解 构建 验证 迭代</span></p>
+
+               <div class="skills__groups">
+                  <article class="skills__group">
+                     <span class="skills__label">CORE</span>
+                     <h3 class="skills__name">Systems Foundation</h3>
+                     <div class="skills__list">
+                        <span>C++17</span>
+                        <span>Linux</span>
+                        <span>POSIX</span>
+                        <span>CMake</span>
+                        <span>Git</span>
+                     </div>
+                  </article>
+
+                  <article class="skills__group">
+                     <span class="skills__label">BUILDING</span>
+                     <h3 class="skills__name">Backend Engineering</h3>
+                     <div class="skills__list">
+                        <span>Socket</span>
+                        <span>epoll</span>
+                        <span>Reactor</span>
+                        <span>HTTP</span>
+                        <span>Concurrency</span>
+                        <span>Testing</span>
+                     </div>
+                  </article>
+
+                  <article class="skills__group">
+                     <span class="skills__label">EXPLORING</span>
+                     <h3 class="skills__name">Service Ecosystem</h3>
+                     <div class="skills__list">
+                        <span>Python</span>
+                        <span>MySQL</span>
+                        <span>Redis</span>
+                        <span>Go</span>
+                        <span>Observability</span>
+                        <span>Distributed systems</span>
+                     </div>
+                  </article>
                </div>
+
+               <a class="skills__notes" href="https://github.com/ziyan-cs/obsidian-coding-notes" target="_blank" rel="noreferrer">
+                  <span class="skills__notes-icon" aria-hidden="true">
+                     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3.5 5.5A2.5 2.5 0 0 1 6 3h4a2 2 0 0 1 2 2v15a2.7 2.7 0 0 0-2.5-1.5H6A2.5 2.5 0 0 0 3.5 21z"/>
+                        <path d="M20.5 5.5A2.5 2.5 0 0 0 18 3h-4a2 2 0 0 0-2 2v15a2.7 2.7 0 0 1 2.5-1.5H18a2.5 2.5 0 0 1 2.5 2.5z"/>
+                     </svg>
+                  </span>
+                  <span class="skills__notes-copy">
+                     <span class="skills__label">PUBLIC NOTES</span>
+                     <strong>Obsidian Coding Notes</strong>
+                     <span class="skills__notes-description">
+                        <span>Structured notes on backend systems and engineering practice</span>
+                        <span class="zh">持续整理后端系统与工程实践笔记</span>
+                     </span>
+                  </span>
+                  <span class="skills__notes-arrow" aria-hidden="true">↗</span>
+               </a>
             </div>
          </section>
 
@@ -178,13 +249,13 @@
       <footer class="footer">
          <div class="footer__container container">
             <blockquote class="footer__quote">
-               <p>MAKE IT WORK. MAKE IT RIGHT.<br>MAKE IT FAST.</p>
+               <p><span>MAKE IT WORK.</span> <span>MAKE IT RIGHT.</span><br><span>MAKE IT FAST.</span></p>
                <cite>— Kent Beck</cite>
             </blockquote>
             <div class="footer__right">
                <nav class="footer__links" aria-label="Footer navigation">
                   <a href="#work">Works</a>
-                  <a href="#service">Focus</a>
+                  <a href="#service">Services</a>
                   <a href="#skills">Skills</a>
                </nav>
                <div class="footer__socials">

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "personal-site",
   "compatibility_date": "2026-07-27",
@@ -11,4 +12,12 @@
   "compatibility_flags": [
     "nodejs_compat"
   ]
+=======
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "personal-site",
+  "compatibility_date": "2026-09-10",
+  "assets": {
+    "directory": "./"
+  }
+>>>>>>> origin/main
 }
