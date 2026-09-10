@@ -25,8 +25,61 @@ const updateHeader = () => {
   header?.classList.toggle('scroll-header', window.scrollY > 48);
 };
 
+const navSectionLinks = [...document.querySelectorAll('#nav-menu .nav__link[href^="#"]')];
+const navSections = navSectionLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+let navigationClickTarget = null;
+let navigationReleaseTimer;
+
+const setActiveNavigation = (href) => {
+  navSectionLinks.forEach((link) => {
+    link.classList.toggle('active-link', link.getAttribute('href') === href);
+  });
+};
+
+const updateActiveNavigation = () => {
+  const marker = window.scrollY + Math.min(window.innerHeight * .35, 260);
+  let activeSection = navSections[0];
+
+  navSections.forEach((section) => {
+    if (section.offsetTop <= marker) activeSection = section;
+  });
+
+  if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
+    activeSection = navSections.at(-1);
+  }
+
+  setActiveNavigation(`#${activeSection?.id}`);
+};
+
+const finishNavigationScroll = () => {
+  if (!navigationClickTarget) return;
+
+  navigationClickTarget = null;
+  clearTimeout(navigationReleaseTimer);
+  updateActiveNavigation();
+};
+
+navSectionLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    const href = link.getAttribute('href');
+    navigationClickTarget = href;
+    setActiveNavigation(href);
+
+    clearTimeout(navigationReleaseTimer);
+    navigationReleaseTimer = setTimeout(finishNavigationScroll, 1400);
+  });
+});
+
 window.addEventListener('scroll', updateHeader, { passive: true });
+window.addEventListener('scroll', () => {
+  if (!navigationClickTarget) updateActiveNavigation();
+}, { passive: true });
+window.addEventListener('resize', updateActiveNavigation, { passive: true });
+window.addEventListener('scrollend', finishNavigationScroll, { passive: true });
 updateHeader();
+updateActiveNavigation();
 
 if (contactForm) {
   const fields = [...contactForm.querySelectorAll('input:not([data-honeypot]), textarea')];
@@ -332,38 +385,5 @@ if (contactForm) {
 
     event.preventDefault();
     event.returnValue = '';
-  });
-}
-
-/* Persistent custom cursor: the OS cursor remains hidden inside the page. */
-const cursorMedia = window.matchMedia('(hover: hover) and (pointer: fine)');
-
-if (cursorMedia.matches) {
-  const cursor = document.createElement('span');
-  let hasPointerPosition = false;
-
-  cursor.className = 'light-cursor';
-  cursor.setAttribute('aria-hidden', 'true');
-  document.body.append(cursor);
-
-  const updateCursor = (event) => {
-    cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0) translate(-50%, -50%)`;
-
-    if (!hasPointerPosition || !cursor.classList.contains('is-visible')) {
-      cursor.classList.add('is-visible');
-      hasPointerPosition = true;
-    }
-  };
-
-  const hideCursor = () => {
-    cursor.classList.remove('is-visible');
-  };
-
-  window.addEventListener('pointermove', updateCursor, { passive: true });
-  document.documentElement.addEventListener('pointerenter', updateCursor, { passive: true });
-  document.documentElement.addEventListener('pointerleave', hideCursor, { passive: true });
-
-  document.addEventListener('compositionstart', () => {
-    if (hasPointerPosition) cursor.classList.add('is-visible');
   });
 }
