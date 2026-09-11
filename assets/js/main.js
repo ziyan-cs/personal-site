@@ -113,30 +113,47 @@ updateHeader();
 updateActiveNavigation();
 
 const revealGroups = [
-  ['#about .about__title', '#about .about__content'],
-  ['#projects .section__title', '#projects .work__card'],
-  ['#focus .section__title', '#focus .services__card'],
-  ['#skills .section__title', '#skills .skills__description', '#skills .learning__step'],
-  ['#contact .section__title', '#contact .contact__form', '#contact .contact__details'],
+  ['#about .about__title'],
+  ['#about .about__content'],
+  ['#projects .section__title'],
+  ['#projects .work__card'],
+  ['#focus .section__title'],
+  ['#focus .services__card'],
+  ['#skills .section__title', '#skills .skills__description'],
+  ['#skills .learning__step'],
+  ['#contact .section__title'],
+  ['#contact .contact__form', '#contact .contact__details'],
   ['.footer__quote', '.footer__right', '.footer__copy']
 ];
 
 const revealElements = [];
+const revealBatches = [];
 
 revealGroups.forEach((selectors) => {
   const groupElements = selectors.flatMap((selector) => [...document.querySelectorAll(selector)]);
 
   groupElements.forEach((element, index) => {
     element.classList.add('scroll-reveal');
-    element.style.setProperty('--reveal-delay', `${Math.min(index * 85, 255)}ms`);
+    element.style.setProperty('--reveal-delay', `${Math.min(index * 35, 105)}ms`);
     revealElements.push(element);
   });
+
+  if (groupElements.length) revealBatches.push(groupElements);
 });
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const initiallyVisible = revealElements.filter((element) => element.getBoundingClientRect().top < window.innerHeight);
+const showRevealBatch = (batch) => {
+  batch.forEach((element) => {
+    element.classList.add('is-visible');
+    element.addEventListener('transitionend', () => {
+      element.classList.add('reveal-complete');
+    }, { once: true });
+  });
+};
 
-initiallyVisible.forEach((element) => element.classList.add('is-visible', 'reveal-complete'));
+revealBatches
+  .filter((batch) => batch.some((element) => element.getBoundingClientRect().top < window.innerHeight))
+  .forEach((batch) => batch.forEach((element) => element.classList.add('is-visible', 'reveal-complete')));
 document.documentElement.classList.add('reveal-ready');
 
 if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -146,10 +163,8 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
 
-      entry.target.classList.add('is-visible');
-      entry.target.addEventListener('transitionend', () => {
-        entry.target.classList.add('reveal-complete');
-      }, { once: true });
+      const batch = revealBatches.find((items) => items.includes(entry.target));
+      if (batch) showRevealBatch(batch);
       observer.unobserve(entry.target);
     });
   }, {
@@ -157,9 +172,9 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
     rootMargin: '0px 0px -8% 0px'
   });
 
-  revealElements
-    .filter((element) => !element.classList.contains('is-visible'))
-    .forEach((element) => revealObserver.observe(element));
+  revealBatches
+    .filter((batch) => !batch.some((element) => element.classList.contains('is-visible')))
+    .forEach((batch) => revealObserver.observe(batch[0]));
 }
 
 if (contactForm) {

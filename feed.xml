@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>ziyan-cs updates</title>
+    <link>https://ziyan-cs.com/</link>
+    <description>Updates from ziyan-cs: C++ backend, Linux systems, and engineering practice.</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Fri, 11 Sep 2026 00:00:00 +0800</lastBuildDate>
+    <item>
+      <title>ziyan-cs.com is live</title>
+      <link>https://ziyan-cs.com/</link>
+      <guid isPermaLink="true">https://ziyan-cs.com/</guid>
+      <pubDate>Fri, 11 Sep 2026 00:00:00 +0800</pubDate>
+      <description>Personal site launch: projects, engineering practice, and a backend learning route.</description>
+    </item>
+  </channel>
+</rss>
