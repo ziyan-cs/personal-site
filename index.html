@@ -216,56 +216,48 @@
                      <div class="learning__head"><span class="skills__label">FOUNDATIONS</span><span class="learning__number">01</span></div>
                      <h3 class="learning__name">计算机基础</h3>
                      <p>数据结构与算法、计算机组成原理、操作系统与计算机网络基础</p>
-                     <span class="learning__status learning__status--foundation">Foundation</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">C++ BACKEND</span><span class="learning__number">02</span></div>
                      <h3 class="learning__name">C++ 后端</h3>
                      <p>对象与资源模型、STL、现代 C++、并发正确性与性能基础</p>
-                     <span class="learning__status learning__status--active">In practice</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">LINUX</span><span class="learning__number">03</span></div>
                      <h3 class="learning__name">Linux 系统编程</h3>
                      <p>进程与线程、内存、文件 I/O、信号、调度与运行时行为</p>
-                     <span class="learning__status learning__status--active">In practice</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">NETWORKING</span><span class="learning__number">04</span></div>
                      <h3 class="learning__name">网络编程</h3>
                      <p>POSIX Socket、I/O 多路复用、协议处理与事件驱动服务器</p>
-                     <span class="learning__status learning__status--current">Current focus</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">PYTHON</span><span class="learning__number">05</span></div>
                      <h3 class="learning__name">Python 工程</h3>
                      <p>自动化脚本、文件与数据处理、测试、日志、类型与辅助开发</p>
-                     <span class="learning__status learning__status--supporting">Supporting</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">GO BACKEND</span><span class="learning__number">06</span></div>
                      <h3 class="learning__name">Go 后端</h3>
                      <p>模块与错误、context、并发、测试、HTTP 服务与数据访问</p>
-                     <span class="learning__status learning__status--next">Next</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">DATA</span><span class="learning__number">07</span></div>
                      <h3 class="learning__name">数据与分布式</h3>
                      <p>MySQL、Redis、消息、缓存、一致性与服务可靠性基础</p>
-                     <span class="learning__status learning__status--next">Next</span>
                   </article>
 
                   <article class="learning__step">
                      <div class="learning__head"><span class="skills__label">TOOLING</span><span class="learning__number">08</span></div>
                      <h3 class="learning__name">工程工具</h3>
                      <p>Git、CMake、编译链接、调试、静态检查、测试与部署实践</p>
-                     <span class="learning__status learning__status--supporting">In use</span>
                   </article>
                </div>
             </div>
@@ -336,12 +328,17 @@
                <div class="footer__socials">
                   <a href="https://github.com/ziyan-cs" target="_blank" rel="noreferrer" aria-label="GitHub"><img src="https://cdn.simpleicons.org/github/8B5CF6" alt="" width="22" height="22"></a>
                   <a href="https://leetcode.cn/u/yan-emt/" target="_blank" rel="noreferrer" aria-label="LeetCode"><img src="https://cdn.simpleicons.org/leetcode/8B5CF6" alt="" width="22" height="22"></a>
-                  <a href="https://github.com/ziyan-cs/obsidian-coding-notes" target="_blank" rel="noreferrer" aria-label="Obsidian Coding Notes"><i class="ri-book-open-line" aria-hidden="true"></i></a>
-                  <a href="/feed.xml" aria-label="RSS feed"><i class="ri-rss-line" aria-hidden="true"></i></a>
+                  <span class="footer__share-wrap">
+                     <button class="footer__share" type="button" aria-label="Copy site link" title="Copy site link">
+                        <i class="ri-share-forward-line" aria-hidden="true"></i>
+                     </button>
+                     <span class="footer__share-feedback" aria-hidden="true"><i class="ri-check-line"></i>URL copied</span>
+                  </span>
+                  <span class="visually-hidden" id="share-status" aria-live="polite"></span>
                </div>
             </div>
          </div>
-         <p class="footer__copy">© 2026 ziyan-cs</p>
+         <p class="footer__copy">© <span id="footer-year">2026</span> ziyan-cs</p>
       </footer>
 
       <script src="assets/js/contact-worker-config.js"></script>

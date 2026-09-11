@@ -4,6 +4,9 @@ const navClose = document.getElementById('nav-close');
 const navScrim = document.getElementById('nav-scrim');
 const header = document.getElementById('header');
 const contactForm = document.getElementById('contact-form');
+const footerYear = document.getElementById('footer-year');
+
+if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 const setMobileMenu = (isOpen) => {
   navMenu?.classList.toggle('show-menu', isOpen);
@@ -595,4 +598,51 @@ if (contactForm) {
     event.preventDefault();
     event.returnValue = '';
   });
+}
+
+const shareButton = document.querySelector('.footer__share');
+const shareStatus = document.getElementById('share-status');
+const shareFeedback = document.querySelector('.footer__share-feedback');
+const shareIcon = shareButton?.querySelector('i');
+
+if (shareButton) {
+  const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href;
+  const shareUrl = canonicalUrl || `${window.location.origin}${window.location.pathname}`;
+
+  const showCopiedState = () => {
+    shareButton.classList.add('is-copied');
+    shareIcon?.classList.replace('ri-share-forward-line', 'ri-check-line');
+    shareButton.setAttribute('aria-label', 'URL copied');
+    shareButton.title = 'URL copied';
+    if (shareStatus) shareStatus.textContent = 'URL copied';
+    shareFeedback?.classList.add('is-visible');
+
+    window.setTimeout(() => {
+      shareButton.classList.remove('is-copied');
+      shareIcon?.classList.replace('ri-check-line', 'ri-share-forward-line');
+      shareButton.setAttribute('aria-label', 'Copy site link');
+      shareButton.title = 'Copy site link';
+      shareFeedback?.classList.remove('is-visible');
+    }, 1800);
+  };
+
+  const copySiteLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      const fallback = document.createElement('textarea');
+      fallback.value = shareUrl;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.append(fallback);
+      fallback.select();
+      document.execCommand('copy');
+      fallback.remove();
+    }
+
+    showCopiedState();
+  };
+
+  shareButton.addEventListener('click', copySiteLink);
 }
