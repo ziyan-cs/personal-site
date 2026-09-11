@@ -88,8 +88,7 @@ body {
     radial-gradient(circle 23rem at 92% 27%, hsla(var(--hue), 70%, 57%, .15), transparent 72%),
     radial-gradient(circle 25rem at 10% 43%, hsla(var(--hue), 72%, 58%, .16), transparent 72%),
     radial-gradient(circle 24rem at 91% 61%, hsla(var(--hue), 68%, 55%, .14), transparent 73%),
-    radial-gradient(circle 25rem at 18% 79%, hsla(var(--hue), 72%, 58%, .16), transparent 72%),
-    radial-gradient(circle 22rem at 68% 93%, hsla(var(--hue), 74%, 59%, .13), transparent 72%);
+    radial-gradient(circle 25rem at 16% 76%, hsla(var(--hue), 72%, 58%, .15), transparent 72%);
   background-attachment: scroll;
   color: var(--text-color);
 }
@@ -723,7 +722,7 @@ img {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  min-height: 205px;
+  min-height: 0;
   padding: 1.4rem;
   border: 1px solid var(--border-color);
   border-radius: 1.25rem;
@@ -764,32 +763,6 @@ img {
   line-height: 1.7;
   overflow-wrap: anywhere;
 }
-.learning__status {
-  display: inline-flex;
-  align-items: center;
-  gap: .45rem;
-  width: max-content;
-  margin-top: auto;
-  padding-top: 1rem;
-  color: hsl(var(--hue), 8%, 64%);
-  font-size: var(--smaller-font-size);
-  font-weight: var(--font-semi-bold);
-  letter-spacing: .04em;
-  text-transform: uppercase;
-}
-.learning__status::before {
-  width: .42rem;
-  height: .42rem;
-  border-radius: 50%;
-  background: currentColor;
-  content: '';
-}
-.learning__status--foundation { color: hsl(var(--hue), 32%, 66%); }
-.learning__status--active { color: hsl(var(--hue), 61%, 65%); }
-.learning__status--current { color: var(--accent-text-color); }
-.learning__status--supporting { color: hsl(var(--hue), 42%, 70%); }
-.learning__status--next { color: hsl(var(--hue), 11%, 55%); }
-
 @media (prefers-reduced-motion: reduce) {
   .learning__step { transition: none; }
   .learning__step:hover { transform: none; }
@@ -848,8 +821,9 @@ img {
 
 
 /*=============== FOOTER ===============*/
-.footer { position: relative; overflow: hidden; padding: 6rem 0 7rem; background: radial-gradient(34rem 12rem at 50% 108%, hsla(var(--hue), 80%, 58%, .26), transparent 72%); }
-.footer__container { display: grid; gap: var(--space-5); padding-top: var(--space-5); }
+.footer { position: relative; isolation: isolate; overflow: hidden; padding: 6rem 0 7rem; }
+.footer::before { position: absolute; z-index: 0; bottom: -9rem; left: 50%; width: clamp(30rem, 74vw, 58rem); height: clamp(12rem, 22vw, 17rem); background: radial-gradient(ellipse at center, hsla(var(--hue), 82%, 61%, .34), hsla(var(--hue), 76%, 58%, .16) 31%, hsla(var(--hue), 70%, 54%, .05) 52%, transparent 72%); content: ''; filter: blur(28px); pointer-events: none; transform: translateX(-50%); -webkit-mask-image: linear-gradient(to top, #000 0 48%, transparent 100%); mask-image: linear-gradient(to top, #000 0 48%, transparent 100%); }
+.footer__container { position: relative; z-index: 1; display: grid; gap: var(--space-5); padding-top: var(--space-5); }
 .footer__quote { max-width: 34rem; color: var(--white-color); font-family: var(--second-font); font-style: normal; }
 .footer__quote p { font-size: var(--h1-font-size); font-weight: var(--font-semi-bold); line-height: 1.26; letter-spacing: -.025em; }
 .footer__quote cite { display: block; margin-top: 1rem; color: var(--text-color); font-family: var(--body-font); font-size: var(--small-font-size); font-style: normal; letter-spacing: .04em; }
@@ -862,7 +836,22 @@ img {
 .footer__socials img { display: block; width: 1.35rem; height: 1.35rem; }
 .footer__socials i { color: hsl(var(--hue), 68%, 62%); font-size: 1.35rem; }
 .footer__socials a:hover { transform: translateY(-3px); opacity: .78; }
-.footer__copy { position: relative; margin-top: 5rem; text-align: center; color: var(--text-color); font-size: var(--small-font-size); letter-spacing: .04em; }
+.footer__share { position: relative; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; padding: 0; border: 0; background: transparent; color: hsl(var(--hue), 68%, 62%); cursor: pointer; transition: transform .18s ease, opacity .18s ease, color .18s ease; }
+.footer__share::before { position: absolute; width: 1.45rem; height: 1.45rem; border: 1px solid hsla(var(--hue), 72%, 66%, .7); border-radius: 50%; content: ''; opacity: 0; pointer-events: none; }
+.footer__share-wrap { position: relative; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; }
+.footer__share i { color: inherit; }
+.footer__share:hover, .footer__share:focus-visible { transform: translateY(-3px); opacity: .78; }
+.footer__share:focus-visible { outline: 2px solid hsl(var(--hue), 72%, 68%); outline-offset: .32rem; border-radius: .2rem; }
+.footer__share.is-copied { color: hsl(150, 65%, 60%); transform: translateY(-2px) scale(1.05); }
+.footer__share.is-copied::before { animation: share-ripple .5s ease-out; }
+.footer__share-feedback { position: absolute; left: 50%; bottom: calc(100% + .78rem); display: inline-flex; align-items: center; gap: .32rem; padding: .46rem .7rem; border: 1px solid hsla(var(--hue), 28%, 72%, .22); border-radius: 999px; background: linear-gradient(135deg, hsl(var(--hue), 14%, 15%), hsl(var(--hue), 14%, 10%)); box-shadow: 0 .6rem 1.5rem hsla(0, 0%, 0%, .3); color: hsl(150, 62%, 70%); font-size: .77rem; font-weight: var(--font-medium); letter-spacing: .01em; line-height: 1; white-space: nowrap; opacity: 0; pointer-events: none; transform: translate(-50%, .45rem) scale(.92); transition: opacity .16s ease, transform .24s cubic-bezier(.16, 1, .3, 1); }
+.footer__share-feedback i { color: inherit; font-size: .9rem; }
+.footer__share-feedback::after { position: absolute; left: 50%; bottom: -.28rem; width: .46rem; height: .46rem; background: hsl(var(--hue), 12%, 11%); content: ''; transform: translateX(-50%) rotate(45deg); }
+.footer__share-feedback.is-visible { opacity: 1; transform: translate(-50%, 0) scale(1); }
+@keyframes share-ripple { from { opacity: .8; transform: scale(.72); } to { opacity: 0; transform: scale(1.7); } }
+@media (prefers-reduced-motion: reduce) { .footer__share, .footer__share-feedback { transition: none; } .footer__share.is-copied::before { animation: none; } }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.footer__copy { position: relative; z-index: 1; margin-top: 5rem; text-align: center; color: var(--text-color); font-size: var(--small-font-size); letter-spacing: .04em; }
 
 @media (width < 1024px){
   .footer__quote p {
