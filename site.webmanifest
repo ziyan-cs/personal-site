@@ -1,0 +1,17 @@
+{
+  "name": "ziyan-cs · 个人作品集",
+  "short_name": "ziyan-cs",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#08080C",
+  "theme_color": "#08080C",
+  "icons": [
+    {
+      "src": "/assets/img/ziyan-mark.svg?v=20260913",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
