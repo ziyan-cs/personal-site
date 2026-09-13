@@ -4,6 +4,9 @@ const navClose = document.getElementById('nav-close');
 const navScrim = document.getElementById('nav-scrim');
 const header = document.getElementById('header');
 const contactForm = document.getElementById('contact-form');
+const footerYear = document.getElementById('footer-year');
+
+if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 const setMobileMenu = (isOpen) => {
   navMenu?.classList.toggle('show-menu', isOpen);
@@ -113,30 +116,47 @@ updateHeader();
 updateActiveNavigation();
 
 const revealGroups = [
-  ['#about .about__title', '#about .about__content'],
-  ['#projects .section__title', '#projects .work__card'],
-  ['#focus .section__title', '#focus .services__card'],
-  ['#skills .section__title', '#skills .skills__description', '#skills .learning__step'],
-  ['#contact .section__title', '#contact .contact__form', '#contact .contact__details'],
+  ['#about .about__title'],
+  ['#about .about__content'],
+  ['#projects .section__title'],
+  ['#projects .work__card'],
+  ['#focus .section__title'],
+  ['#focus .services__card'],
+  ['#skills .section__title', '#skills .skills__description'],
+  ['#skills .learning__step'],
+  ['#contact .section__title'],
+  ['#contact .contact__form', '#contact .contact__details'],
   ['.footer__quote', '.footer__right', '.footer__copy']
 ];
 
 const revealElements = [];
+const revealBatches = [];
 
 revealGroups.forEach((selectors) => {
   const groupElements = selectors.flatMap((selector) => [...document.querySelectorAll(selector)]);
 
   groupElements.forEach((element, index) => {
     element.classList.add('scroll-reveal');
-    element.style.setProperty('--reveal-delay', `${Math.min(index * 85, 255)}ms`);
+    element.style.setProperty('--reveal-delay', `${Math.min(index * 35, 105)}ms`);
     revealElements.push(element);
   });
+
+  if (groupElements.length) revealBatches.push(groupElements);
 });
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const initiallyVisible = revealElements.filter((element) => element.getBoundingClientRect().top < window.innerHeight);
+const showRevealBatch = (batch) => {
+  batch.forEach((element) => {
+    element.classList.add('is-visible');
+    element.addEventListener('transitionend', () => {
+      element.classList.add('reveal-complete');
+    }, { once: true });
+  });
+};
 
-initiallyVisible.forEach((element) => element.classList.add('is-visible', 'reveal-complete'));
+revealBatches
+  .filter((batch) => batch.some((element) => element.getBoundingClientRect().top < window.innerHeight))
+  .forEach((batch) => batch.forEach((element) => element.classList.add('is-visible', 'reveal-complete')));
 document.documentElement.classList.add('reveal-ready');
 
 if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -146,10 +166,8 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
 
-      entry.target.classList.add('is-visible');
-      entry.target.addEventListener('transitionend', () => {
-        entry.target.classList.add('reveal-complete');
-      }, { once: true });
+      const batch = revealBatches.find((items) => items.includes(entry.target));
+      if (batch) showRevealBatch(batch);
       observer.unobserve(entry.target);
     });
   }, {
@@ -157,9 +175,9 @@ if (reduceMotion || !('IntersectionObserver' in window)) {
     rootMargin: '0px 0px -8% 0px'
   });
 
-  revealElements
-    .filter((element) => !element.classList.contains('is-visible'))
-    .forEach((element) => revealObserver.observe(element));
+  revealBatches
+    .filter((batch) => !batch.some((element) => element.classList.contains('is-visible')))
+    .forEach((batch) => revealObserver.observe(batch[0]));
 }
 
 if (contactForm) {
@@ -171,6 +189,8 @@ if (contactForm) {
   const sendButton = document.getElementById('send-message');
   const sendButtonLabel = sendButton?.querySelector('.contact__button-label');
   const sendButtonIcon = sendButton?.querySelector('.contact__button-icon');
+  const turnstileMount = document.getElementById('contact-turnstile');
+  const contactWorkerConfig = window.CONTACT_WORKER_CONFIG || {};
   const storageKey = 'ziyan-cs.contact-history';
   const sendLogKey = 'ziyan-cs.contact-send-log';
   const historyLimit = 6;
@@ -181,6 +201,8 @@ if (contactForm) {
   const earliestSubmitTime = Date.now() + 1500;
   const hasDraft = () => fields.some((field) => field.value.trim() !== '');
   let cooldownTimer;
+  let turnstileToken = '';
+  let turnstileWidgetId;
   let contactHistory = loadHistory();
 
   function loadHistory() {
@@ -221,7 +243,7 @@ if (contactForm) {
     try {
       localStorage.setItem(sendLogKey, JSON.stringify([...loadSendLog(), Date.now()]));
     } catch {
-      // EmailJS still works when local storage is unavailable.
+      // Form delivery remains available when local storage is unavailable.
     }
   }
 
@@ -262,17 +284,81 @@ if (contactForm) {
     setButtonState('default', 'Send message', 'ri-arrow-right-line');
   }
 
-  function emailJsIsConfigured() {
-    const config = window.EMAILJS_CONFIG;
+  function workerIsConfigured() {
+    const { endpoint, turnstileSiteKey } = contactWorkerConfig;
 
     return Boolean(
-      window.emailjs &&
-      window.EMAILJS_READY &&
-      config?.publicKey &&
-      config?.serviceId &&
-      config?.templateId &&
-      !Object.values(config).some((value) => value.startsWith('YOUR_')),
+      typeof endpoint === 'string' &&
+      typeof turnstileSiteKey === 'string' &&
+      endpoint.startsWith('https://') &&
+      turnstileSiteKey.length > 10,
     );
+  }
+
+  function resetTurnstile() {
+    turnstileToken = '';
+    if (turnstileWidgetId !== undefined && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
+  function initializeTurnstile() {
+    if (!workerIsConfigured() || !turnstileMount) return;
+
+    turnstileMount.hidden = false;
+
+    const render = () => {
+      if (!window.turnstile || turnstileWidgetId !== undefined) return;
+
+      turnstileWidgetId = window.turnstile.render(turnstileMount, {
+        sitekey: contactWorkerConfig.turnstileSiteKey,
+        action: 'contact',
+        appearance: 'interaction-only',
+        theme: 'dark',
+        size: 'flexible',
+        callback(token) {
+          turnstileToken = token;
+        },
+        'expired-callback'() {
+          turnstileToken = '';
+        },
+        'error-callback'() {
+          turnstileToken = '';
+        },
+      });
+    };
+
+    if (window.turnstile) {
+      render();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+    script.async = true;
+    script.onload = render;
+    document.head.append(script);
+  }
+
+  async function sendWithWorker() {
+    const response = await fetch(contactWorkerConfig.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: contactForm.elements.name.value.trim(),
+        email: contactForm.elements.email.value.trim(),
+        message: contactForm.elements.message.value.trim(),
+        website: honeypotField?.value || '',
+        turnstileToken,
+      }),
+    });
+
+    if (response.ok) return;
+
+    const body = await response.json().catch(() => ({}));
+    const error = new Error(body.error || 'Send failed');
+    error.status = response.status;
+    throw error;
   }
 
   function setFieldError(field, message = '') {
@@ -287,6 +373,24 @@ if (contactForm) {
       error.hidden = !isInvalid;
       error.querySelector('span').textContent = message;
     }
+  }
+
+  function shakeInvalidFields(invalidFields) {
+    const containers = invalidFields
+      .map((field) => field.closest('.contact__field'))
+      .filter(Boolean);
+
+    containers.forEach((container) => container.classList.remove('contact__field--shake'));
+    void contactForm.offsetWidth;
+
+    containers.forEach((container, index) => {
+      container.style.setProperty('--field-shake-delay', `${index * 45}ms`);
+      container.classList.add('contact__field--shake');
+      window.setTimeout(() => {
+        container.classList.remove('contact__field--shake');
+        container.style.removeProperty('--field-shake-delay');
+      }, 520 + index * 45);
+    });
   }
 
   function validateForm() {
@@ -305,7 +409,9 @@ if (contactForm) {
     );
     setFieldError(message, message.value.trim() ? '' : 'Required');
 
-    const firstInvalidField = fields.find((field) => field.getAttribute('aria-invalid') === 'true');
+    const invalidFields = fields.filter((field) => field.getAttribute('aria-invalid') === 'true');
+    const firstInvalidField = invalidFields[0];
+    if (firstInvalidField) shakeInvalidFields(invalidFields);
     firstInvalidField?.focus();
     if (firstInvalidField) closeHistoryMenus();
 
@@ -404,12 +510,27 @@ if (contactForm) {
     });
   });
 
+  const fieldNavigation = new Map([
+    [contactForm.elements.name, contactForm.elements.email],
+    [contactForm.elements.email, messageField],
+  ]);
+
+  fieldNavigation.forEach((nextField, field) => {
+    field.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' || event.isComposing) return;
+
+      event.preventDefault();
+      nextField.focus();
+    });
+  });
+
   fields.forEach((field) => {
     field.addEventListener('input', () => setFieldError(field));
   });
 
   messageField.addEventListener('input', updateMessageCounter);
   updateMessageCounter();
+  initializeTurnstile();
   startCooldown();
 
   document.addEventListener('click', (event) => {
@@ -430,8 +551,16 @@ if (contactForm) {
 
     rememberIdentity();
 
-    if (!emailJsIsConfigured()) {
-      setButtonState('error', 'EmailJS setup required', 'ri-alert-line');
+    const useContactWorker = workerIsConfigured();
+
+    if (!useContactWorker) {
+      setButtonState('error', 'Contact service unavailable', 'ri-alert-line');
+      setTimeout(startCooldown, 3200);
+      return;
+    }
+
+    if (useContactWorker && !turnstileToken) {
+      setButtonState('error', 'Complete verification', 'ri-shield-check-line');
       setTimeout(startCooldown, 3200);
       return;
     }
@@ -446,17 +575,19 @@ if (contactForm) {
     setButtonState('sending', 'Sending…', 'ri-loader-4-line');
 
     try {
-      const config = window.EMAILJS_CONFIG;
-      await window.emailjs.sendForm(config.serviceId, config.templateId, contactForm);
+      await sendWithWorker();
 
       saveSuccessfulSend();
       contactForm.reset();
+      resetTurnstile();
       fields.forEach((field) => setFieldError(field));
       updateMessageCounter();
       setButtonState('success', 'Message sent', 'ri-check-line');
       setTimeout(startCooldown, 2400);
-    } catch {
-      setButtonState('error', 'Send failed · Retry', 'ri-refresh-line');
+    } catch (error) {
+      resetTurnstile();
+      const label = error?.status === 429 ? 'Please try again later' : 'Send failed · Retry';
+      setButtonState('error', label, 'ri-refresh-line');
       setTimeout(startCooldown, 3200);
     }
   });
@@ -467,4 +598,51 @@ if (contactForm) {
     event.preventDefault();
     event.returnValue = '';
   });
+}
+
+const shareButton = document.querySelector('.footer__share');
+const shareStatus = document.getElementById('share-status');
+const shareFeedback = document.querySelector('.footer__share-feedback');
+const shareIcon = shareButton?.querySelector('i');
+
+if (shareButton) {
+  const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href;
+  const shareUrl = canonicalUrl || `${window.location.origin}${window.location.pathname}`;
+
+  const showCopiedState = () => {
+    shareButton.classList.add('is-copied');
+    shareIcon?.classList.replace('ri-share-forward-line', 'ri-check-line');
+    shareButton.setAttribute('aria-label', 'URL copied');
+    shareButton.title = 'URL copied';
+    if (shareStatus) shareStatus.textContent = 'URL copied';
+    shareFeedback?.classList.add('is-visible');
+
+    window.setTimeout(() => {
+      shareButton.classList.remove('is-copied');
+      shareIcon?.classList.replace('ri-check-line', 'ri-share-forward-line');
+      shareButton.setAttribute('aria-label', 'Copy site link');
+      shareButton.title = 'Copy site link';
+      shareFeedback?.classList.remove('is-visible');
+    }, 1800);
+  };
+
+  const copySiteLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+    } catch {
+      const fallback = document.createElement('textarea');
+      fallback.value = shareUrl;
+      fallback.setAttribute('readonly', '');
+      fallback.style.position = 'fixed';
+      fallback.style.opacity = '0';
+      document.body.append(fallback);
+      fallback.select();
+      document.execCommand('copy');
+      fallback.remove();
+    }
+
+    showCopiedState();
+  };
+
+  shareButton.addEventListener('click', copySiteLink);
 }
