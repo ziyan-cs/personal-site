@@ -1,346 +1,400 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
-      <meta name="robots" content="index, follow, max-image-preview:none">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="referrer" content="strict-origin-when-cross-origin">
-      <meta name="author" content="Yan · ziyan-cs">
-      <meta name="application-name" content="ziyan-cs">
-      <meta name="theme-color" content="#08080C">
-      <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.simpleicons.org; connect-src 'self' https://ziyan-cs-contact.ziyan-cs.workers.dev https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
-      <link rel="icon" href="assets/img/ziyan-mark.svg?v=20260913" type="image/svg+xml" sizes="any">
-      <link rel="canonical" href="https://ziyan-cs.com/">
-      <link rel="manifest" href="/site.webmanifest">
-      <link rel="alternate" type="application/rss+xml" title="ziyan-cs updates" href="https://ziyan-cs.com/feed.xml">
-      <meta property="og:type" content="website">
-      <meta property="og:locale" content="zh_CN">
-      <meta property="og:site_name" content="ziyan-cs">
-      <meta property="og:url" content="https://ziyan-cs.com/">
-      <meta property="og:title" content="ziyan-cs · 个人作品集">
-      <meta property="og:description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
-      <meta name="twitter:card" content="summary">
-      <meta name="twitter:url" content="https://ziyan-cs.com/">
-      <meta name="twitter:title" content="ziyan-cs · 个人作品集">
-      <meta name="twitter:description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
-      <script type="application/ld+json">
-         {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ziyan-cs.com/#yan","name":"Yan","alternateName":"ziyan-cs","url":"https://ziyan-cs.com/","description":"专注 C++ 后端、Linux 系统与网络编程的学习与工程实践。","knowsAbout":["C++ backend development","Linux system programming","network programming","epoll","Reactor pattern"],"sameAs":["https://github.com/ziyan-cs","https://leetcode.cn/u/yan-emt/"]},{"@type":"WebSite","@id":"https://ziyan-cs.com/#website","name":"ziyan-cs","alternateName":"ziyan-cs personal site","url":"https://ziyan-cs.com/","description":"C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。","inLanguage":"zh-CN","author":{"@id":"https://ziyan-cs.com/#yan"}}]}
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
+   <meta name="robots" content="index, follow, max-image-preview:none">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="referrer" content="strict-origin-when-cross-origin">
+   <meta name="author" content="Yan · ziyan-cs">
+   <meta name="application-name" content="ziyan-cs">
+   <meta name="theme-color" content="#08080C">
+   <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data: https://cdn.simpleicons.org; connect-src 'self' https://ziyan-cs-contact.ziyan-cs.workers.dev https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+   <link rel="icon" href="assets/img/ziyan-mark.svg?v=20260913" type="image/svg+xml" sizes="any">
+   <link rel="canonical" href="https://ziyan-cs.com/">
+   <link rel="manifest" href="/site.webmanifest">
+   <link rel="alternate" type="application/rss+xml" title="ziyan-cs updates" href="https://ziyan-cs.com/feed.xml">
+   <meta property="og:type" content="website">
+   <meta property="og:locale" content="zh_CN">
+   <meta property="og:site_name" content="ziyan-cs">
+   <meta property="og:url" content="https://ziyan-cs.com/">
+   <meta property="og:title" content="ziyan-cs · 个人作品集">
+   <meta property="og:description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
+   <meta name="twitter:card" content="summary">
+   <meta name="twitter:url" content="https://ziyan-cs.com/">
+   <meta name="twitter:title" content="ziyan-cs · 个人作品集">
+   <meta name="twitter:description" content="C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。">
+   <script type="application/ld+json">
+         {"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://ziyan-cs.com/#yan","name":"Yan","alternateName":"ziyan-cs","url":"https://ziyan-cs.com/","description":"专注 C++ 后端、Linux 系统与网络编程的学习与工程实践。","knowsAbout":["C++ backend development","Linux system programming","network programming","epoll","Reactor pattern"],"sameAs":["https://github.com/ziyan-cs","https://leetcode.cn/u/ziyan-cs/"]},{"@type":"WebSite","@id":"https://ziyan-cs.com/#website","name":"ziyan-cs","alternateName":"ziyan-cs personal site","url":"https://ziyan-cs.com/","description":"C++ 后端、Linux 系统与网络编程的个人技术作品集。持续构建 Web Server、维护自托管服务并沉淀学习笔记。","inLanguage":"zh-CN","author":{"@id":"https://ziyan-cs.com/#yan"}}]}
       </script>
-      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"version":"2024.11.0","token":"16fbe04620a14f1690fe17bc960e076c","r":1,"spa":2}'></script>
-      <script src="assets/js/boot.js"></script>
+   <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"version":"2024.11.0","token":"16fbe04620a14f1690fe17bc960e076c","r":1,"spa":2}'></script>
+   <script src="assets/js/boot.js"></script>
 
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.9.0/fonts/remixicon.css">
 
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600&amp;family=Syne:wght@400..800&amp;display=swap">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Poppins:wght@400;500;600&amp;family=Syne:wght@400..800&amp;display=swap">
 
-      <link rel="stylesheet" href="assets/css/styles.css">
+   <link rel="stylesheet" href="assets/css/styles.css">
 
-      <title>ziyan-cs · 个人作品集</title>
-   </head>
-   <body>
-      <a class="skip-link" href="#main-content">跳到主要内容</a>
-      <header class="header" id="header">
-         <nav class="nav container">
-            <a href="/" class="nav__logo"><img class="nav__brand-mark" src="assets/img/ziyan-mark.svg" alt="" width="30" height="30">ziyan-cs</a>
+   <title>ziyan-cs · 个人作品集</title>
+</head>
 
-            <button class="nav__scrim" id="nav-scrim" type="button" aria-label="Close menu" tabindex="-1"></button>
+<body>
+   <a class="skip-link" href="#main-content">跳到主要内容</a>
+   <header class="header" id="header">
+      <nav class="nav container">
+         <a href="/" class="nav__logo"><img class="nav__brand-mark" src="assets/img/ziyan-mark.svg" alt="" width="30"
+               height="30">ziyan-cs</a>
 
-            <div class="nav__menu" id="nav-menu">
-               <ul class="nav__list">
-                  <li>
-                     <a href="#home" class="nav__link active-link"><i class="ri-home-5-line nav__icon" aria-hidden="true"></i><span>Home</span></a>
-                  </li>
+         <button class="nav__scrim" id="nav-scrim" type="button" aria-label="Close menu" tabindex="-1"></button>
 
-                  <li>
-                     <a href="#projects" class="nav__link"><i class="ri-code-box-line nav__icon" aria-hidden="true"></i><span>Projects</span></a>
-                  </li>
+         <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+               <li>
+                  <a href="#home" class="nav__link active-link"><i class="ri-home-5-line nav__icon"
+                        aria-hidden="true"></i><span>Home</span></a>
+               </li>
 
-                  <li>
-                     <a href="#focus" class="nav__link"><i class="ri-server-line nav__icon" aria-hidden="true"></i><span>Tech Focus</span></a>
-                  </li>
+               <li>
+                  <a href="#projects" class="nav__link"><i class="ri-code-box-line nav__icon"
+                        aria-hidden="true"></i><span>Projects</span></a>
+               </li>
 
-                  <li>
-                     <a href="#skills" class="nav__link"><i class="ri-stack-line nav__icon" aria-hidden="true"></i><span>Learning</span></a>
-                  </li>
+               <li>
+                  <a href="#focus" class="nav__link"><i class="ri-server-line nav__icon"
+                        aria-hidden="true"></i><span>Tech Focus</span></a>
+               </li>
 
-                  <li>
-                     <a href="#contact" class="nav__link nav__contact nav__menu-contact"><i class="ri-mail-send-line nav__icon" aria-hidden="true"></i><span>Contact</span></a>
-                  </li>
-               </ul>
+               <li>
+                  <a href="#skills" class="nav__link"><i class="ri-stack-line nav__icon"
+                        aria-hidden="true"></i><span>Learning</span></a>
+               </li>
 
-               <button class="nav__close" id="nav-close" aria-label="Close menu">
-                  <i class="ri-close-large-line"></i>
-               </button>
-            </div>
+               <li>
+                  <a href="#contact" class="nav__link nav__contact nav__menu-contact"><i
+                        class="ri-mail-send-line nav__icon" aria-hidden="true"></i><span>Contact</span></a>
+               </li>
+            </ul>
 
-            <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-menu" aria-expanded="false">
-               <i class="ri-menu-line"></i>
+            <button class="nav__close" id="nav-close" aria-label="Close menu">
+               <i class="ri-close-large-line"></i>
             </button>
-         </nav>
-      </header>
+         </div>
 
-      <main class="main" id="main-content" tabindex="-1">
-         <section class="home section" id="home">
-            <div class="home__container container grid">
-               <div class="home__data">
-                  <p class="home__subtitle">Hi! I'm Yan</p>
-                  <h1 class="home__title">C++ Backend &amp;<br><span>Systems Developer</span></h1>
-                  <p class="home__description">Build. Learn. Commit.<br><span class="zh">以 C++ 后端为主线，把原理写进代码，把实践沉淀为可复习的知识</span></p>
-               </div>
-               <div class="home__images">
-                  <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-label="Yan 的个人照片" xmlns="http://www.w3.org/2000/svg">
-                     <defs>
-                        <linearGradient id="home-composite-fade" x1="0" y1="420" x2="0" y2="491" gradientUnits="userSpaceOnUse">
-                           <stop offset="0" stop-color="#fff" stop-opacity="1"/>
-                           <stop offset="1" stop-color="#fff" stop-opacity="0"/>
-                        </linearGradient>
-                        <mask id="home-composite-mask" x="-32" y="-20" width="543" height="520" maskUnits="userSpaceOnUse" mask-type="alpha">
-                           <rect x="-32" y="-20" width="543" height="520" fill="url(#home-composite-fade)"/>
-                        </mask>
-                     </defs>
-                     <g mask="url(#home-composite-mask)">
-                        <image href="assets/img/home-blob-purple.svg" x="0" y="0" width="479" height="467" aria-hidden="true"/>
-                        <image href="assets/img/portrait-yan.png" x="-19" y="-4" width="517" height="495"/>
-                     </g>
-                  </svg>
-               </div>
+         <button class="nav__toggle" id="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-menu"
+            aria-expanded="false">
+            <i class="ri-menu-line"></i>
+         </button>
+      </nav>
+   </header>
+
+   <main class="main" id="main-content" tabindex="-1">
+      <section class="home section" id="home">
+         <div class="home__container container grid">
+            <div class="home__data">
+               <p class="home__subtitle">Hi! I'm Yan</p>
+               <h1 class="home__title">C++ Backend &amp;<br><span>Systems Developer</span></h1>
+               <p class="home__description">Build. Learn. Commit.<br><span class="zh">以 C++
+                     后端为主线，把原理写进代码，把实践沉淀为可复习的知识</span></p>
             </div>
-         </section>
-
-         <section class="about section" id="about">
-            <div class="about__container container grid">
-               <h2 class="about__title">About Me: Learning by building.<br><span>Starting from fundamentals.</span></h2>
-               <div class="about__content">
-                  <p class="about__description">Understand it. Implement it. Verify it.<br><span class="zh">围绕 C++ 后端与 Linux 系统能力，先理解机制和边界，再用实现、测试与复盘验证，保持稳定投入，积累可解释、可复用的工程能力</span></p>
-                  <a href="#contact" class="nav__contact">Contact me <i class="ri-arrow-right-line" aria-hidden="true"></i></a>
-               </div>
-            </div>
-         </section>
-
-         <section class="work section" id="projects">
-            <h2 class="section__title">Selected <span>Projects</span></h2>
-            <div class="work__container container grid">
-               <article class="work__card work__card--primary">
-                  <span class="work__eyebrow">01 · CURRENT CORE</span>
-                  <h3 class="work__name">C++ Web Server</h3>
-                  <p class="work__description">A C++17 epoll/Reactor server built from sockets upward.<br><span class="zh">从 POSIX Socket 向上分层构建，目前已完成非阻塞 Socket、epoll 事件循环、连接读写缓冲和多连接 TCP Echo，HTTP/1.1 按路线继续实现</span></p>
-                  <ul class="work__highlights" aria-label="Project highlights">
-                     <li>Non-blocking sockets</li>
-                     <li>Buffered partial writes</li>
-                     <li>Deferred cleanup</li>
-                     <li>GCC + Clang CI</li>
-                  </ul>
-                  <div class="work__architecture" aria-label="Module architecture">
-                     <div><span>BASE</span><p>Buffer · Config · Logger · TimeUtil</p></div>
-                     <div><span>CORE</span><p>Channel · Epoll · EventLoop</p></div>
-                     <div><span>NETWORK</span><p>Socket · Acceptor · TcpConnection</p></div>
-                     <div><span>SERVER</span><p>TcpServer · Connection lifecycle</p></div>
-                  </div>
-                  <div class="work__footer">
-                     <span class="work__meta">C++17 · CMake · Linux · HTTP/1.1</span>
-                     <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank" rel="noreferrer" aria-label="在 GitHub 打开 C++ Web Server">View on GitHub ↗</a>
-                  </div>
-               </article>
-
-               <article class="work__card">
-                  <span class="work__eyebrow">02 · RUNNING</span>
-                  <h3 class="work__name">Personal Infrastructure</h3>
-                  <p class="work__description">A small self-hosted setup on R4S/OpenWrt.<br><span class="zh">在 R4S/OpenWrt 上部署个人博客、Vaultwarden 与远程访问服务，日常负责更新维护、配置备份、可用性检查和故障定位</span></p>
-                  <div class="work__footer">
-                     <span class="work__meta">OpenWrt · Tailscale · SSH</span>
-                     <span class="work__status work__status--live"><span aria-hidden="true"></span>24/7 running</span>
-                  </div>
-               </article>
-
-               <article class="work__card">
-                  <span class="work__eyebrow">03 · WRITING</span>
-                  <h3 class="work__name">Obsidian Coding Notes</h3>
-                  <p class="work__description">A roadmap-driven backend learning notebook.<br><span class="zh">按知识地图组织主题，以 30 秒复述、最小实践、自测和间隔复习形成闭环，长期沉淀可检索、可验证、可持续更新的知识</span></p>
-                  <div class="work__footer">
-                     <span class="work__meta">Obsidian · Git · Markdown</span>
-                     <a href="https://github.com/ziyan-cs/obsidian-coding-notes" class="work__link" target="_blank" rel="noreferrer" aria-label="在 GitHub 打开 Obsidian Coding Notes">Read notes ↗</a>
-                  </div>
-               </article>
-            </div>
-         </section>
-
-         <section class="services section" id="focus">
-            <h2 class="section__title">Engineering <span>Practices</span></h2>
-            <div class="services__container container grid">
-               <article class="services__card">
-                  <span class="services__eyebrow">01 · ARCHITECTURE</span>
-                  <h3 class="services__name">组件分层与职责边界</h3>
-                  <p class="services__description">用清晰依赖组织 Reactor 核心、网络抽象、协议处理和服务组装，减少跨层耦合</p>
-                  <p class="services__stack">Layering · Dependency · Interface</p>
-               </article>
-               <article class="services__card">
-                  <span class="services__eyebrow">02 · OWNERSHIP</span>
-                  <h3 class="services__name">资源所有权与生命周期</h3>
-                  <p class="services__description">用 RAII、智能指针与明确的关闭路径管理套接字、连接和回调关系</p>
-                  <p class="services__stack">RAII · Lifecycle · Concurrency</p>
-               </article>
-               <article class="services__card">
-                  <span class="services__eyebrow">03 · NETWORKING</span>
-                  <h3 class="services__name">事件驱动与连接管理</h3>
-                  <p class="services__description">围绕非阻塞 I/O、epoll 事件分发、读写缓冲与连接状态推进实现</p>
-                  <p class="services__stack">Socket · epoll · Buffer · State</p>
-               </article>
-
-               <article class="services__card">
-                  <span class="services__eyebrow">04 · VERIFICATION</span>
-                  <h3 class="services__name">测试、诊断与性能验证</h3>
-                  <p class="services__description">通过双编译器 CI、静态检查、Sanitizer、调试和压测验证改动</p>
-                  <p class="services__stack">CI · Clang-Tidy · Sanitizer · GDB</p>
-               </article>
-
-               <article class="services__card">
-                  <span class="services__eyebrow">05 · OPERATIONS</span>
-                  <h3 class="services__name">部署维护与故障恢复</h3>
-                  <p class="services__description">维护自托管服务的访问、更新、备份和排障流程，保留可复现记录</p>
-                  <p class="services__stack">OpenWrt · Tailscale · Backup · Recovery</p>
-               </article>
-            </div>
-         </section>
-
-         <section class="skills section" id="skills">
-            <h2 class="section__title">Learning <span>Route</span></h2>
-            <div class="skills__container container grid">
-               <p class="skills__description">A map for backend engineering<br><span class="zh">以知识地图组织学习顺序，从底层机制走向服务交付，每个主题都经过复述、最小实践、自测与复习</span></p>
-
-               <div class="learning__steps">
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">FOUNDATIONS</span><span class="learning__number">01</span></div>
-                     <h3 class="learning__name">计算机基础</h3>
-                     <p>数据结构与算法、计算机组成原理、操作系统与计算机网络基础</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">C++ BACKEND</span><span class="learning__number">02</span></div>
-                     <h3 class="learning__name">C++ 后端</h3>
-                     <p>对象与资源模型、STL、现代 C++、并发正确性与性能基础</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">LINUX</span><span class="learning__number">03</span></div>
-                     <h3 class="learning__name">Linux 系统编程</h3>
-                     <p>进程与线程、内存、文件 I/O、信号、调度与运行时行为</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">NETWORKING</span><span class="learning__number">04</span></div>
-                     <h3 class="learning__name">网络编程</h3>
-                     <p>POSIX Socket、I/O 多路复用、协议处理与事件驱动服务器</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">PYTHON</span><span class="learning__number">05</span></div>
-                     <h3 class="learning__name">Python 工程</h3>
-                     <p>自动化脚本、文件与数据处理、测试、日志、类型与辅助开发</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">GO BACKEND</span><span class="learning__number">06</span></div>
-                     <h3 class="learning__name">Go 后端</h3>
-                     <p>模块与错误、context、并发、测试、HTTP 服务与数据访问</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">DATA</span><span class="learning__number">07</span></div>
-                     <h3 class="learning__name">数据与分布式</h3>
-                     <p>MySQL、Redis、消息、缓存、一致性与服务可靠性基础</p>
-                  </article>
-
-                  <article class="learning__step">
-                     <div class="learning__head"><span class="skills__label">TOOLING</span><span class="learning__number">08</span></div>
-                     <h3 class="learning__name">工程工具</h3>
-                     <p>Git、CMake、编译链接、调试、静态检查、测试与部署实践</p>
-                  </article>
-               </div>
-            </div>
-         </section>
-
-         <section class="contact section" id="contact">
-            <h2 class="section__title">Send a <span>Message</span></h2>
-            <div class="contact__container container grid">
-               <form class="contact__form" id="contact-form" novalidate>
-                  <div class="contact__honeypot" aria-hidden="true">
-                     <label for="company-website">Company website</label>
-                     <input id="company-website" type="text" name="company_website" tabindex="-1" autocomplete="off" data-honeypot>
-                  </div>
-                  <div class="contact__field" data-history-field="name">
-                     <input id="contact-name" type="text" name="name" placeholder="Name" aria-label="Name" aria-describedby="name-error" aria-invalid="false" autocomplete="off" maxlength="100" required>
-                     <div class="contact__history" id="name-history" role="listbox" aria-label="Saved names" hidden></div>
-                     <span class="contact__error" id="name-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
-                  </div>
-                  <div class="contact__field" data-history-field="email">
-                     <input id="contact-email" type="email" name="email" placeholder="Email" aria-label="Email" aria-describedby="email-error" aria-invalid="false" autocomplete="off" inputmode="email" required>
-                     <div class="contact__history" id="email-history" role="listbox" aria-label="Saved email addresses" hidden></div>
-                     <span class="contact__error" id="email-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
-                  </div>
-                  <div class="contact__field contact__field--message">
-                     <textarea id="contact-message" name="message" placeholder="Message" aria-label="Message" aria-describedby="message-error message-counter" aria-invalid="false" maxlength="1000" required></textarea>
-                     <span class="contact__error" id="message-error" aria-live="polite" hidden><i class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
-                     <span class="contact__counter" id="message-counter">0 / 1000</span>
-                  </div>
-                  <div class="contact__turnstile" id="contact-turnstile" aria-live="polite" hidden></div>
-                  <button type="submit" class="nav__contact" id="send-message">
-                     <span class="contact__button-label" aria-live="polite">Send message</span>
-                     <i class="ri-arrow-right-line contact__button-icon" aria-hidden="true"></i>
-                  </button>
-               </form>
-               <aside class="contact__details" aria-label="Contact details">
-                  <a class="contact__card" href="mailto:ziyan.cs@proton.me">
-                     <i class="ri-mail-line contact__icon" aria-hidden="true"></i>
-                     <span><strong>Email</strong><small>ziyan.cs@proton.me</small></span>
-                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
-                  </a>
-                  <div class="contact__card">
-                     <i class="ri-phone-line contact__icon" aria-hidden="true"></i>
-                     <span><strong>Phone</strong><small>Private · Email first</small></span>
-                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
-                  </div>
-                  <div class="contact__card">
-                     <i class="ri-map-pin-line contact__icon" aria-hidden="true"></i>
-                     <span><strong>Location</strong><small>Shijiazhuang, Hebei, China</small></span>
-                     <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
-                  </div>
-               </aside>
-            </div>
-         </section>
-      </main>
-
-      <footer class="footer">
-         <div class="footer__container container">
-            <blockquote class="footer__quote">
-               <p><span>MAKE IT WORK.</span> <span>MAKE IT RIGHT.</span><br><span>MAKE IT FAST.</span></p>
-               <cite>— Kent Beck</cite>
-            </blockquote>
-            <div class="footer__right">
-               <nav class="footer__links" aria-label="Footer navigation">
-                  <a href="#projects">Projects</a>
-                  <a href="#focus">Tech Focus</a>
-                  <a href="#skills">Learning</a>
-               </nav>
-               <div class="footer__socials">
-                  <a href="https://github.com/ziyan-cs" target="_blank" rel="noreferrer" aria-label="GitHub"><img src="https://cdn.simpleicons.org/github/8B5CF6" alt="" width="22" height="22"></a>
-                  <a href="https://leetcode.cn/u/yan-emt/" target="_blank" rel="noreferrer" aria-label="LeetCode"><img src="https://cdn.simpleicons.org/leetcode/8B5CF6" alt="" width="22" height="22"></a>
-                  <span class="footer__share-wrap">
-                     <button class="footer__share" type="button" aria-label="Copy site link" title="Copy site link">
-                        <i class="ri-share-forward-line" aria-hidden="true"></i>
-                     </button>
-                     <span class="footer__share-feedback" aria-hidden="true"><i class="ri-check-line"></i>URL copied</span>
-                  </span>
-                  <span class="visually-hidden" id="share-status" aria-live="polite"></span>
-               </div>
+            <div class="home__images">
+               <svg class="home__visual" viewBox="0 0 479 467" role="img" aria-label="Yan 的个人照片"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                     <linearGradient id="home-composite-fade" x1="0" y1="420" x2="0" y2="491"
+                        gradientUnits="userSpaceOnUse">
+                        <stop offset="0" stop-color="#fff" stop-opacity="1" />
+                        <stop offset="1" stop-color="#fff" stop-opacity="0" />
+                     </linearGradient>
+                     <mask id="home-composite-mask" x="-32" y="-20" width="543" height="520" maskUnits="userSpaceOnUse"
+                        mask-type="alpha">
+                        <rect x="-32" y="-20" width="543" height="520" fill="url(#home-composite-fade)" />
+                     </mask>
+                  </defs>
+                  <g mask="url(#home-composite-mask)">
+                     <image href="assets/img/home-blob-purple.svg" x="0" y="0" width="479" height="467"
+                        aria-hidden="true" />
+                     <image href="assets/img/portrait-yan.png" x="-19" y="-4" width="517" height="495" />
+                  </g>
+               </svg>
             </div>
          </div>
-         <p class="footer__copy">© <span id="footer-year">2026</span> ziyan-cs</p>
-      </footer>
+      </section>
 
-      <script src="assets/js/contact-worker-config.js"></script>
-      <script src="assets/js/main.js"></script>
-   </body>
+      <section class="about section" id="about">
+         <div class="about__container container grid">
+            <h2 class="about__title">About Me: Learning by building.<br><span>Starting from fundamentals.</span></h2>
+            <div class="about__content">
+               <p class="about__description">Understand it. Implement it. Verify it.<br><span class="zh">围绕 C++ 后端与
+                     Linux 系统能力，先理解机制和边界，再用实现、测试与复盘验证，保持稳定投入，积累可解释、可复用的工程能力</span></p>
+               <a href="#contact" class="nav__contact">Contact me <i class="ri-arrow-right-line"
+                     aria-hidden="true"></i></a>
+            </div>
+         </div>
+      </section>
+
+      <section class="work section" id="projects">
+         <h2 class="section__title">Selected <span>Projects</span></h2>
+         <div class="work__container container grid">
+            <article class="work__card work__card--primary">
+               <span class="work__eyebrow">01 · CURRENT CORE</span>
+               <h3 class="work__name">C++ Web Server</h3>
+               <p class="work__description">A C++17 epoll/Reactor server built from sockets upward.<br><span
+                     class="zh">从 POSIX Socket 向上分层构建，目前已完成非阻塞 Socket、epoll 事件循环、连接读写缓冲和多连接 TCP Echo，HTTP/1.1
+                     按路线继续实现</span></p>
+               <ul class="work__highlights" aria-label="Project highlights">
+                  <li>Non-blocking sockets</li>
+                  <li>Buffered partial writes</li>
+                  <li>Deferred cleanup</li>
+                  <li>GCC + Clang CI</li>
+               </ul>
+               <div class="work__architecture" aria-label="Module architecture">
+                  <div><span>BASE</span>
+                     <p>Buffer · Config · Logger · TimeUtil</p>
+                  </div>
+                  <div><span>CORE</span>
+                     <p>Channel · Epoll · EventLoop</p>
+                  </div>
+                  <div><span>NETWORK</span>
+                     <p>Socket · Acceptor · TcpConnection</p>
+                  </div>
+                  <div><span>SERVER</span>
+                     <p>TcpServer · Connection lifecycle</p>
+                  </div>
+               </div>
+               <div class="work__footer">
+                  <span class="work__meta">C++17 · CMake · Linux · HTTP/1.1</span>
+                  <a href="https://github.com/ziyan-cs/webserver-cpp" class="work__link" target="_blank"
+                     rel="noreferrer" aria-label="在 GitHub 打开 C++ Web Server">View on GitHub ↗</a>
+               </div>
+            </article>
+
+            <article class="work__card">
+               <span class="work__eyebrow">02 · RUNNING</span>
+               <h3 class="work__name">Personal Infrastructure</h3>
+               <p class="work__description">A small self-hosted setup on R4S/OpenWrt.<br><span class="zh">在 R4S/OpenWrt
+                     上部署个人博客、Vaultwarden 与远程访问服务，日常负责更新维护、配置备份、可用性检查和故障定位</span></p>
+               <div class="work__footer">
+                  <span class="work__meta">OpenWrt · Tailscale · SSH</span>
+                  <span class="work__status work__status--live"><span aria-hidden="true"></span>24/7 running</span>
+               </div>
+            </article>
+
+            <article class="work__card">
+               <span class="work__eyebrow">03 · WRITING</span>
+               <h3 class="work__name">Obsidian Coding Notes</h3>
+               <p class="work__description">A roadmap-driven backend learning notebook.<br><span class="zh">按知识地图组织主题，以
+                     30 秒复述、最小实践、自测和间隔复习形成闭环，长期沉淀可检索、可验证、可持续更新的知识</span></p>
+               <div class="work__footer">
+                  <span class="work__meta">Obsidian · Git · Markdown</span>
+                  <a href="https://github.com/ziyan-cs/obsidian-coding-notes" class="work__link" target="_blank"
+                     rel="noreferrer" aria-label="在 GitHub 打开 Obsidian Coding Notes">Read notes ↗</a>
+               </div>
+            </article>
+         </div>
+      </section>
+
+      <section class="services section" id="focus">
+         <h2 class="section__title">Engineering <span>Practices</span></h2>
+         <div class="services__container container grid">
+            <article class="services__card">
+               <span class="services__eyebrow">01 · ARCHITECTURE</span>
+               <h3 class="services__name">组件分层与职责边界</h3>
+               <p class="services__description">用清晰依赖组织 Reactor 核心、网络抽象、协议处理和服务组装，减少跨层耦合</p>
+               <p class="services__stack">Layering · Dependency · Interface</p>
+            </article>
+            <article class="services__card">
+               <span class="services__eyebrow">02 · OWNERSHIP</span>
+               <h3 class="services__name">资源所有权与生命周期</h3>
+               <p class="services__description">用 RAII、智能指针与明确的关闭路径管理套接字、连接和回调关系</p>
+               <p class="services__stack">RAII · Lifecycle · Concurrency</p>
+            </article>
+            <article class="services__card">
+               <span class="services__eyebrow">03 · NETWORKING</span>
+               <h3 class="services__name">事件驱动与连接管理</h3>
+               <p class="services__description">围绕非阻塞 I/O、epoll 事件分发、读写缓冲与连接状态推进实现</p>
+               <p class="services__stack">Socket · epoll · Buffer · State</p>
+            </article>
+
+            <article class="services__card">
+               <span class="services__eyebrow">04 · VERIFICATION</span>
+               <h3 class="services__name">测试、诊断与性能验证</h3>
+               <p class="services__description">通过双编译器 CI、静态检查、Sanitizer、调试和压测验证改动</p>
+               <p class="services__stack">CI · Clang-Tidy · Sanitizer · GDB</p>
+            </article>
+
+            <article class="services__card">
+               <span class="services__eyebrow">05 · OPERATIONS</span>
+               <h3 class="services__name">部署维护与故障恢复</h3>
+               <p class="services__description">维护自托管服务的访问、更新、备份和排障流程，保留可复现记录</p>
+               <p class="services__stack">OpenWrt · Tailscale · Backup · Recovery</p>
+            </article>
+         </div>
+      </section>
+
+      <section class="skills section" id="skills">
+         <h2 class="section__title">Learning <span>Route</span></h2>
+         <div class="skills__container container grid">
+            <p class="skills__description">A map for backend engineering<br><span
+                  class="zh">以知识地图组织学习顺序，从底层机制走向服务交付，每个主题都经过复述、最小实践、自测与复习</span></p>
+
+            <div class="learning__steps">
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">FOUNDATIONS</span><span
+                        class="learning__number">01</span></div>
+                  <h3 class="learning__name">计算机基础</h3>
+                  <p>数据结构与算法、计算机组成原理、操作系统与计算机网络基础</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">C++ BACKEND</span><span
+                        class="learning__number">02</span></div>
+                  <h3 class="learning__name">C++ 后端</h3>
+                  <p>对象与资源模型、STL、现代 C++、并发正确性与性能基础</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">LINUX</span><span
+                        class="learning__number">03</span></div>
+                  <h3 class="learning__name">Linux 系统编程</h3>
+                  <p>进程与线程、内存、文件 I/O、信号、调度与运行时行为</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">NETWORKING</span><span
+                        class="learning__number">04</span></div>
+                  <h3 class="learning__name">网络编程</h3>
+                  <p>POSIX Socket、I/O 多路复用、协议处理与事件驱动服务器</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">PYTHON</span><span
+                        class="learning__number">05</span></div>
+                  <h3 class="learning__name">Python 工程</h3>
+                  <p>自动化脚本、文件与数据处理、测试、日志、类型与辅助开发</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">GO BACKEND</span><span
+                        class="learning__number">06</span></div>
+                  <h3 class="learning__name">Go 后端</h3>
+                  <p>模块与错误、context、并发、测试、HTTP 服务与数据访问</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">DATA</span><span
+                        class="learning__number">07</span></div>
+                  <h3 class="learning__name">数据与分布式</h3>
+                  <p>MySQL、Redis、消息、缓存、一致性与服务可靠性基础</p>
+               </article>
+
+               <article class="learning__step">
+                  <div class="learning__head"><span class="skills__label">TOOLING</span><span
+                        class="learning__number">08</span></div>
+                  <h3 class="learning__name">工程工具</h3>
+                  <p>Git、CMake、编译链接、调试、静态检查、测试与部署实践</p>
+               </article>
+            </div>
+         </div>
+      </section>
+
+      <section class="contact section" id="contact">
+         <h2 class="section__title">Send a <span>Message</span></h2>
+         <div class="contact__container container grid">
+            <form class="contact__form" id="contact-form" novalidate>
+               <div class="contact__honeypot" aria-hidden="true">
+                  <label for="company-website">Company website</label>
+                  <input id="company-website" type="text" name="company_website" tabindex="-1" autocomplete="off"
+                     data-honeypot>
+               </div>
+               <div class="contact__field" data-history-field="name">
+                  <input id="contact-name" type="text" name="name" placeholder="Name" aria-label="Name"
+                     aria-describedby="name-error" aria-invalid="false" autocomplete="off" maxlength="100" required>
+                  <div class="contact__history" id="name-history" role="listbox" aria-label="Saved names" hidden></div>
+                  <span class="contact__error" id="name-error" aria-live="polite" hidden><i
+                        class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+               </div>
+               <div class="contact__field" data-history-field="email">
+                  <input id="contact-email" type="email" name="email" placeholder="Email" aria-label="Email"
+                     aria-describedby="email-error" aria-invalid="false" autocomplete="off" inputmode="email" required>
+                  <div class="contact__history" id="email-history" role="listbox" aria-label="Saved email addresses"
+                     hidden></div>
+                  <span class="contact__error" id="email-error" aria-live="polite" hidden><i
+                        class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+               </div>
+               <div class="contact__field contact__field--message">
+                  <textarea id="contact-message" name="message" placeholder="Message" aria-label="Message"
+                     aria-describedby="message-error message-counter" aria-invalid="false" maxlength="1000"
+                     required></textarea>
+                  <span class="contact__error" id="message-error" aria-live="polite" hidden><i
+                        class="ri-error-warning-line" aria-hidden="true"></i><span></span></span>
+                  <span class="contact__counter" id="message-counter">0 / 1000</span>
+               </div>
+               <div class="contact__turnstile" id="contact-turnstile" aria-live="polite" hidden></div>
+               <button type="submit" class="nav__contact" id="send-message">
+                  <span class="contact__button-label" aria-live="polite">Send message</span>
+                  <i class="ri-arrow-right-line contact__button-icon" aria-hidden="true"></i>
+               </button>
+            </form>
+            <aside class="contact__details" aria-label="Contact details">
+               <a class="contact__card" href="mailto:ziyan.cs@proton.me">
+                  <i class="ri-mail-line contact__icon" aria-hidden="true"></i>
+                  <span><strong>Email</strong><small>ziyan.cs@proton.me</small></span>
+                  <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+               </a>
+               <div class="contact__card">
+                  <i class="ri-phone-line contact__icon" aria-hidden="true"></i>
+                  <span><strong>Phone</strong><small>Private · Email first</small></span>
+                  <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+               </div>
+               <div class="contact__card">
+                  <i class="ri-map-pin-line contact__icon" aria-hidden="true"></i>
+                  <span><strong>Location</strong><small>Shijiazhuang, Hebei, China</small></span>
+                  <i class="ri-corner-up-right-line contact__arrow" aria-hidden="true"></i>
+               </div>
+            </aside>
+         </div>
+      </section>
+   </main>
+
+   <footer class="footer">
+      <div class="footer__container container">
+         <blockquote class="footer__quote">
+            <p><span>MAKE IT WORK.</span> <span>MAKE IT RIGHT.</span><br><span>MAKE IT FAST.</span></p>
+            <cite>— Kent Beck</cite>
+         </blockquote>
+         <div class="footer__right">
+            <nav class="footer__links" aria-label="Footer navigation">
+               <a href="#projects">Projects</a>
+               <a href="#focus">Tech Focus</a>
+               <a href="#skills">Learning</a>
+            </nav>
+            <div class="footer__socials">
+               <a href="https://github.com/ziyan-cs" target="_blank" rel="noreferrer" aria-label="GitHub"><img
+                     src="https://cdn.simpleicons.org/github/8B5CF6" alt="" width="22" height="22"></a>
+               <a href="https://leetcode.cn/u/ziyan-cs/" target="_blank" rel="noreferrer" aria-label="LeetCode"><img
+                     src="https://cdn.simpleicons.org/leetcode/8B5CF6" alt="" width="22" height="22"></a>
+               <span class="footer__share-wrap">
+                  <button class="footer__share" type="button" aria-label="Copy site link" title="Copy site link">
+                     <i class="ri-share-forward-line" aria-hidden="true"></i>
+                  </button>
+                  <span class="footer__share-feedback" aria-hidden="true"><i class="ri-check-line"></i>URL copied</span>
+               </span>
+               <span class="visually-hidden" id="share-status" aria-live="polite"></span>
+            </div>
+         </div>
+      </div>
+      <p class="footer__copy">© <span id="footer-year">2026</span> ziyan-cs</p>
+   </footer>
+
+   <script src="assets/js/contact-worker-config.js"></script>
+   <script src="assets/js/main.js"></script>
+</body>
+
 </html>
