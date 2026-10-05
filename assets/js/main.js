@@ -341,24 +341,43 @@ if (contactForm) {
   }
 
   async function sendWithWorker() {
-    const response = await fetch(contactWorkerConfig.endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: contactForm.elements.name.value.trim(),
-        email: contactForm.elements.email.value.trim(),
-        message: contactForm.elements.message.value.trim(),
-        website: honeypotField?.value || '',
-        turnstileToken,
-      }),
-    });
+    let response;
+
+    try {
+      response = await fetch(contactWorkerConfig.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: contactForm.elements.name.value.trim(),
+          email: contactForm.elements.email.value.trim(),
+          message: contactForm.elements.message.value.trim(),
+          website: honeypotField?.value || '',
+          turnstileToken,
+        }),
+      });
+    } catch {
+      const error = new Error('Network unavailable');
+      error.code = 'network';
+      throw error;
+    }
 
     if (response.ok) return;
 
     const body = await response.json().catch(() => ({}));
     const error = new Error(body.error || 'Send failed');
     error.status = response.status;
+    error.code = body.error || '';
     throw error;
+  }
+
+  function sendFailureLabel(error) {
+    if (error?.code === 'network') return 'Contact network unavailable';
+    if (error?.status === 400 && error?.code === 'Verification failed') return 'Verification expired · Retry';
+    if (error?.status === 403) return 'Contact origin blocked';
+    if (error?.status === 429) return 'Please try again later';
+    if (error?.status === 502) return 'Mail delivery failed · Retry';
+    if (error?.status === 503) return 'Contact service unavailable';
+    return 'Send failed · Retry';
   }
 
   function setFieldError(field, message = '') {
@@ -586,7 +605,7 @@ if (contactForm) {
       setTimeout(startCooldown, 2400);
     } catch (error) {
       resetTurnstile();
-      const label = error?.status === 429 ? 'Please try again later' : 'Send failed · Retry';
+      const label = sendFailureLabel(error);
       setButtonState('error', label, 'ri-refresh-line');
       setTimeout(startCooldown, 3200);
     }
