@@ -7,14 +7,14 @@ The contact form's server-side boundary. It accepts requests only from `https://
 - Turnstile site key: `0x4AAAAAAEu_DepuiljC3A2A`
 - Form action: `contact`
 - Production hostname expected by the Worker: `ziyan-cs.com`
-- Worker name: `ziyan-cs-contact`
+- Worker name: `email-contact`
 
 The site key is intentionally public. `TURNSTILE_SECRET`, `RESEND_API_KEY`, sender, and recipient are never committed or served to browsers.
 
 ## Complete the first deployment
 
-1. Deploy this Worker using your normal Cloudflare-authenticated Wrangler installation. Record the HTTPS URL that Wrangler prints.
-2. Set that exact URL as `endpoint` in `../assets/js/contact-worker-config.js`, then deploy the static site. Until an endpoint is set, the existing EmailJS path remains active as a temporary fallback.
+1. Deploy this Worker using your normal Cloudflare-authenticated Wrangler installation.
+2. Bind the production Worker to the custom domain `send.ziyan-cs.com`, then set that URL as `endpoint` in `../assets/js/contact-worker-config.js` and deploy the static site.
 3. Before retrieving the Turnstile secret from the existing widget, use Wrangler 4.109+ outside this repository and confirm its account is the one that owns the widget and Worker.
 4. Store these secrets in the deployed Worker secret store, never in a local JavaScript or `.env` file:
 
@@ -28,4 +28,4 @@ The site key is intentionally public. `TURNSTILE_SECRET`, `RESEND_API_KEY`, send
 
 ## Expected environment
 
-`ALLOWED_ORIGIN` is intentionally a public Worker variable. Keep it at the production origin; do not add localhost to this production Worker. The existing Turnstile widget may permit local development separately, but production validation must only accept `ziyan-cs.com`. Keep `send.ziyan-cs.com` for Resend's Return-Path DNS records, not as a custom domain for this Worker.
+`ALLOWED_ORIGIN` is intentionally a public Worker variable. Keep it at the production origin; do not add localhost to this production Worker. The existing Turnstile widget may permit local development separately, but production validation must only accept `ziyan-cs.com`. `send.ziyan-cs.com` is the public Worker endpoint and also carries the Resend DNS records for the verified sending domain.
