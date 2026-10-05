@@ -156,6 +156,13 @@ export default {
       const delivery = await deliverMessage(env, { name, email, message });
 
       if (!delivery.ok) {
+        const resendError = (await delivery.text()).slice(0, 1000);
+        console.error(JSON.stringify({
+          event: 'resend_delivery_failed',
+          status: delivery.status,
+          statusText: delivery.statusText,
+          response: resendError,
+        }));
         return jsonResponse({ error: 'Delivery failed' }, 502, allowedOrigin);
       }
     } catch {
