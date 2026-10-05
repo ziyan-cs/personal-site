@@ -622,7 +622,6 @@ if (contactForm) {
 const shareButton = document.querySelector('.footer__share');
 const shareStatus = document.getElementById('share-status');
 const shareFeedback = document.querySelector('.footer__share-feedback');
-const shareIcon = shareButton?.querySelector('i');
 
 if (shareButton) {
   const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href;
@@ -630,7 +629,6 @@ if (shareButton) {
 
   const showCopiedState = () => {
     shareButton.classList.add('is-copied');
-    shareIcon?.classList.replace('ri-share-forward-line', 'ri-check-line');
     shareButton.setAttribute('aria-label', 'URL copied');
     shareButton.title = 'URL copied';
     if (shareStatus) shareStatus.textContent = 'URL copied';
@@ -638,7 +636,6 @@ if (shareButton) {
 
     window.setTimeout(() => {
       shareButton.classList.remove('is-copied');
-      shareIcon?.classList.replace('ri-check-line', 'ri-share-forward-line');
       shareButton.setAttribute('aria-label', 'Copy site link');
       shareButton.title = 'Copy site link';
       shareFeedback?.classList.remove('is-visible');

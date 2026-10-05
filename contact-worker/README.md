@@ -28,4 +28,4 @@ The site key is intentionally public. `TURNSTILE_SECRET`, `RESEND_API_KEY`, send
 
 ## Expected environment
 
-`ALLOWED_ORIGIN` is intentionally a public Worker variable. Keep it at the production origin; do not add localhost to this production Worker. The existing Turnstile widget may permit local development separately, but production validation must only accept `ziyan-cs.com`. `send.ziyan-cs.com` is the public Worker endpoint and also carries the Resend DNS records for the verified sending domain.
+`ALLOWED_ORIGIN` is intentionally a public Worker variable. Keep it at the production origin; do not add localhost to this production Worker. The existing Turnstile widget may permit local development separately, but production validation must only accept `ziyan-cs.com`. `send.ziyan-cs.com` is the public Worker endpoint; Resend sends from the verified root-domain address `contact@ziyan-cs.com`.
