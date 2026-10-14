@@ -63,28 +63,38 @@ const navSectionLinks = [...document.querySelectorAll('#nav-menu .nav__link[href
 const navSections = navSectionLinks
   .map((link) => document.querySelector(link.getAttribute('href')))
   .filter(Boolean);
+const navMarkers = [...document.querySelectorAll('main > section')]
+  .map((section) => {
+    const sectionHref = `#${section.id}`;
+    const hasDirectLink = navSectionLinks.some((link) => link.getAttribute('href') === sectionHref);
+    return { section, href: hasDirectLink ? sectionHref : section.dataset.navTarget };
+  })
+  .filter((marker) => marker.href);
 let navigationClickTarget = null;
 let navigationReleaseTimer;
 
 const setActiveNavigation = (href) => {
   navSectionLinks.forEach((link) => {
-    link.classList.toggle('active-link', link.getAttribute('href') === href);
+    const isActive = link.getAttribute('href') === href;
+    link.classList.toggle('active-link', isActive);
+    if (isActive) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
   });
 };
 
 const updateActiveNavigation = () => {
   const marker = window.scrollY + Math.min(window.innerHeight * .35, 260);
-  let activeSection = navSections[0];
+  let activeHref = `#${navSections[0]?.id}`;
 
-  navSections.forEach((section) => {
-    if (section.offsetTop <= marker) activeSection = section;
+  navMarkers.forEach(({ section, href }) => {
+    if (section.offsetTop <= marker) activeHref = href;
   });
 
   if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 4) {
-    activeSection = navSections.at(-1);
+    activeHref = `#${navSections.at(-1)?.id}`;
   }
 
-  setActiveNavigation(`#${activeSection?.id}`);
+  setActiveNavigation(activeHref);
 };
 
 const finishNavigationScroll = () => {
@@ -120,10 +130,14 @@ const revealGroups = [
   ['#about .about__content'],
   ['#projects .section__title'],
   ['#projects .work__card'],
+  ['#blog .section__title'],
+  ['#blog .writing__card'],
+  ['#knowledge .section__title', '#knowledge .skills__description', '#knowledge .knowledge__method'],
+  ['#knowledge .learning__step'],
+  ['#system .section__title'],
+  ['#system .system__overview', '#system .system__categories', '#system .system__privacy'],
   ['#focus .section__title'],
   ['#focus .services__card'],
-  ['#skills .section__title', '#skills .skills__description'],
-  ['#skills .learning__step'],
   ['#contact .section__title'],
   ['#contact .contact__form', '#contact .contact__details'],
   ['.footer__quote', '.footer__right', '.footer__copy']
@@ -622,6 +636,7 @@ if (contactForm) {
 const shareButton = document.querySelector('.footer__share');
 const shareStatus = document.getElementById('share-status');
 const shareFeedback = document.querySelector('.footer__share-feedback');
+const shareIcon = shareButton?.querySelector('i');
 
 if (shareButton) {
   const canonicalUrl = document.querySelector('link[rel="canonical"]')?.href;
@@ -629,6 +644,7 @@ if (shareButton) {
 
   const showCopiedState = () => {
     shareButton.classList.add('is-copied');
+    shareIcon?.classList.replace('ri-share-forward-line', 'ri-check-line');
     shareButton.setAttribute('aria-label', 'URL copied');
     shareButton.title = 'URL copied';
     if (shareStatus) shareStatus.textContent = 'URL copied';
@@ -636,6 +652,7 @@ if (shareButton) {
 
     window.setTimeout(() => {
       shareButton.classList.remove('is-copied');
+      shareIcon?.classList.replace('ri-check-line', 'ri-share-forward-line');
       shareButton.setAttribute('aria-label', 'Copy site link');
       shareButton.title = 'Copy site link';
       shareFeedback?.classList.remove('is-visible');
