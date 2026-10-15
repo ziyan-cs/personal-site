@@ -1023,7 +1023,7 @@ img {
 .footer__share { position: relative; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; padding: 0; border: 0; background: transparent; color: hsl(var(--hue), 68%, 62%); cursor: pointer; transition: transform .18s ease, opacity .18s ease, color .18s ease; }
 .footer__share::before { position: absolute; width: 1.45rem; height: 1.45rem; border: 1px solid hsla(var(--hue), 72%, 66%, .7); border-radius: 50%; content: ''; opacity: 0; pointer-events: none; }
 .footer__share-wrap { position: relative; display: grid; place-items: center; width: 1.5rem; height: 1.5rem; }
-.footer__share i { color: inherit; font-size: 1.35rem; }
+.footer__share-icon { display: block; flex: 0 0 auto; width: 1.35rem; height: 1.35rem; fill: currentColor; }
 .footer__share-feedback-icon { display: block; flex: 0 0 auto; background: currentColor; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
 .footer__share:hover, .footer__share:focus-visible { transform: translateY(-3px); opacity: .78; }
 .footer__share:focus-visible { outline: 2px solid hsl(var(--hue), 72%, 68%); outline-offset: .32rem; border-radius: .2rem; }
@@ -1045,6 +1045,7 @@ img {
   }
   .footer__quote p span { display: block; }
   .footer__quote p br { display: none; }
+  .footer__socials { justify-self: end; justify-content: flex-end; margin-right: 1.25rem; }
 }
 
 
@@ -1123,10 +1124,11 @@ img {
   }
   .nav__icon { display: none; }
 
-  .home__container { grid-template-columns: 1.15fr .85fr; align-items: center; padding-top: 4.5rem; column-gap: clamp(2rem, 4vw, 4rem); }
-  .home__data { justify-self: start; text-align: left; }
+  .home__container { grid-template-areas: 'data image' 'actions image'; grid-template-columns: 1.15fr .85fr; align-items: center; padding-top: 4.5rem; column-gap: clamp(2rem, 4vw, 4rem); }
+  .home__data { grid-area: data; justify-self: start; text-align: left; }
   .home__description { margin-inline: 0; }
-  .home__images { justify-self: end; width: clamp(340px, 36vw, 410px); }
+  .home__images { grid-area: image; justify-self: end; width: clamp(340px, 36vw, 410px); }
+  .home__actions { grid-area: actions; justify-self: start; margin-top: 0; }
   .about__container { grid-template-columns: 1.3fr .7fr; align-items: center; column-gap: 6rem; }
   .work__container { grid-template-columns: minmax(0, 1.25fr) minmax(18rem, .75fr); }
   .work__container.work__container--single { grid-template-columns: minmax(0, 1fr); }
